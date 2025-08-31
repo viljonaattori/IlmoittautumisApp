@@ -1,12 +1,10 @@
-const express = require("express");
-const app = express();
-const PORT = 3001;
+const app = require("./app");
+const { PORT } = require("./utils/config");
+const { ping } = require("./db/pool");
 
-// testireitti
-app.get("/api/hello", (req, res) => {
-  res.json({ message: "Backend toimii!" });
-});
-
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+app.listen(PORT, async () => {
+  const now = await ping().catch(() => null);
+  console.log(
+    `Server running on port ${PORT}${now ? ` | DB OK @ ${now}` : ""}`
+  );
 });

@@ -1,0 +1,6 @@
+Tuntikirjanpito
+---------------
+
+
+Päivä: 31.8	Aika: 2h	Mitä tein: Projektin suunnittelu. Alustin projektin backendin, frontendin ja githubin.  
+	

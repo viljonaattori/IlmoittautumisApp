@@ -2,7 +2,8 @@ POST http://localhost:3001/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "vili.auvinen@gmail.com",
-  "password": "piästäsissään123",
-  "nimi": "Viljonaattori"
+  "email": "test.test@gmail.com",
+  "password": "testi1234",
+  "nimi": "testikäyttäjä",
+  "joukkue_id": 4
 }

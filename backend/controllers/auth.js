@@ -8,13 +8,13 @@ const { errorHandler } = require("../utils/middleware");
 // POST /api/auth/register
 router.post("/register", async (req, res, next) => {
   try {
-    const { email, password, nimi } = req.body;
+    const { email, password, nimi, joukkue_id } = req.body;
 
     // Validointi
-    if (!email || !password || !nimi) {
+    if (!email || !password || !nimi || !joukkue_id) {
       return res
         .status(400)
-        .json({ error: "sähköposti, salasana ja nimi vaaditaan" });
+        .json({ error: "sähköposti, salasana, nimi ja joukkue vaaditaan" });
     }
     if (password.length < 6) {
       return res
@@ -30,17 +30,25 @@ router.post("/register", async (req, res, next) => {
       return res.status(409).json({ error: "Sähköposti on jo käytössä" });
     }
 
+    // Tarkastetaan löytyykö joukkuetta
+    const team = await query("SELECT id FROM `joukkueet` WHERE id = ?", [
+      joukkue_id,
+    ]);
+    if (team.length === 0) {
+      return res.status(400).json({ error: "virheellinen joukkue_id" });
+    }
+
     // Salasanan Hash
     const salasana_hash = await bcrypt.hash(password, 10);
 
     // Insert
     const result = await query(
-      "INSERT INTO `käyttäjät` (email, salasana_hash, nimi) VALUES (?, ?, ?)",
-      [email, salasana_hash, nimi]
+      "INSERT INTO `käyttäjät` (email, salasana_hash, nimi, joukkue_id) VALUES (?, ?, ?, ?)",
+      [email, salasana_hash, nimi, joukkue_id]
     );
 
     const id = Number(result.insertId);
-    const user = { id, email, nimi };
+    const user = { id, email, nimi, joukkue_id: Number(joukkue_id) };
 
     // Luo JWT
     const token = jwt.sign(user, JWT.secret, {

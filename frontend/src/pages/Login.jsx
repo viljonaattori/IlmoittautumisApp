@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Container, TextField, Button, Typography, Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -10,6 +11,8 @@ function Login() {
     console.log("Kirjaudu sisään:", email, password);
     // tänne myöhemmin API-kutsu backendin /login
   };
+
+  const navigate = useNavigate();
 
   return (
     <Container maxWidth="sm">
@@ -56,11 +59,11 @@ function Login() {
         <Typography variant="h6">Uusi käyttäjä?</Typography>
 
         <Button
-          type="submit"
-          variant="contained"
-          color="primary"
+          variant="outlined"
+          color="secondary"
           fullWidth
           sx={{ mt: 2 }}
+          onClick={() => navigate("/register")}
         >
           Rekisteröidy
         </Button>

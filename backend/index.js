@@ -5,6 +5,6 @@ const { ping } = require("./db/pool");
 app.listen(PORT, async () => {
   const now = await ping().catch(() => null);
   console.log(
-    `Server running on port ${PORT}${now ? ` | DB OK @ ${now}` : ""}`
+    `Server running on port ${PORT}${now ? ` | DB OK @ ${now}` : ""}` // Tietokannan testaus
   );
 });

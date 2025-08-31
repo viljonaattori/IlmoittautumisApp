@@ -18,9 +18,9 @@ app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
 app.use(requestLogger);
 app.use(tokenExtractor);
-app.use(userExtractor);
+//app.use(userExtractor);
 
-// Reitit (suomeksi)
+// Reitit
 app.use("/api/auth", authRouter);
 app.use("/api/joukkueet", joukkueetRouter);
 app.use("/api/tapahtumat", tapahtumatRouter);

@@ -3,19 +3,56 @@ const jwt = require("jsonwebtoken");
 const router = require("express").Router();
 const { query } = require("../db/pool");
 const { JWT } = require("../utils/config");
+const { errorHandler } = require("../utils/middleware");
 
 // POST /api/auth/register
 router.post("/register", async (req, res, next) => {
   try {
     const { email, password, nimi } = req.body;
-    const hash = await bcrypt.hash(password, 10);
-    await query(
-      "INSERT INTO käyttäjät (email, salasana_hash, nimi) VALUES (?,?,?)",
-      [email, hash, nimi]
+
+    // Validointi
+    if (!email || !password || !nimi) {
+      return res
+        .status(400)
+        .json({ error: "sähköposti, salasana ja nimi vaaditaan" });
+    }
+    if (password.length < 6) {
+      return res
+        .status(400)
+        .json({ error: "salasanan pituus vähintään 6 merkkiä" });
+    }
+
+    // Tarkastetaan onko käyttäjä olemassa
+    const existing = await query("SELECT id FROM `käyttäjät` WHERE email = ?", [
+      email,
+    ]);
+    if (existing.length > 0) {
+      return res.status(409).json({ error: "Sähköposti on jo käytössä" });
+    }
+
+    // Salasanan Hash
+    const salasana_hash = await bcrypt.hash(password, 10);
+
+    // Insert
+    const result = await query(
+      "INSERT INTO `käyttäjät` (email, salasana_hash, nimi) VALUES (?, ?, ?)",
+      [email, salasana_hash, nimi]
     );
-    res.status(201).json({ message: "ok" });
-  } catch (e) {
-    next(e);
+
+    const id = Number(result.insertId);
+    const user = { id, email, nimi };
+
+    // Luo JWT
+    const token = jwt.sign(user, JWT.secret, {
+      expiresIn: JWT.expiresIn || "7d",
+    });
+    return res.status(201).json({ user, token });
+  } catch (err) {
+    // MariaDB:n duplikaatti varmistus
+    if (err && err.code === "ER_DUP_ENTRY") {
+      return res.status(409).json({ error: "sähköposti on jo käytössä" });
+    }
+    next(err);
   }
 });
 

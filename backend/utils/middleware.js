@@ -29,7 +29,7 @@ const unknownEndpoint = (_req, res) => {
 };
 
 const errorHandler = (err, _req, res, _next) => {
-  console.error(err);
+  console.error("ERROR:", err);
   res.status(500).json({ error: "internal server error" });
 };
 

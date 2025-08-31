@@ -1,0 +1,8 @@
+POST http://localhost:3001/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "vili.auvinen@gmail.com",
+  "password": "piästäsissään123",
+  "nimi": "Viljonaattori"
+}

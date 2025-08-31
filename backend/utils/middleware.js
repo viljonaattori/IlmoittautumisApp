@@ -5,7 +5,7 @@ const { JWT } = require("./config");
 // Request logger
 const requestLogger = morgan("dev");
 
-// Token extractor (Bearer ...)
+// Tarkistaa tokenin jokaisesta pyynnöstä
 const tokenExtractor = (req, _res, next) => {
   const auth = req.get("authorization");
   req.token =

@@ -93,7 +93,6 @@ router.post("/login", async (req, res, next) => {
       expiresIn: JWT.expiresIn || "7d",
     });
 
-    // Palautus
     return res.json({ token, user: payload });
   } catch (err) {
     next(err);

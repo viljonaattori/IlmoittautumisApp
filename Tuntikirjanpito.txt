@@ -4,3 +4,6 @@ Tuntikirjanpito
 
 Päivä: 31.8	Aika: 2h	Mitä tein: Projektin suunnittelu. Alustin projektin backendin, frontendin ja githubin.  
 Päivä:      Aika: 2h    Mitä tein: MariaDB muistelu ja tietokannan luominen + testaaminen. 
+Päivä:      Aika: 2h    Mitä tein: loin kansio rakennelman, middleware,controllers, db, utils, request yms. Toteutin kirjautumisen ja rekisteröitymisen endpointit, sekä testasin ne. 
+            YHT:  6h
+----------------------

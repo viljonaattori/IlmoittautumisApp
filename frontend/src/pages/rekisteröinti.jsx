@@ -55,8 +55,10 @@ export default function Register() {
       // Token local storageen
       localStorage.setItem("token", data.token);
 
-      // Ohjataan käyttäjä takaisin kirjautumis sivulle
-      window.location.href = "/";
+      // pieni viive että käyttäjä näkee onnistuneen rekisteröinnin
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 2000);
     } catch (err) {
       console.error("register error", err);
       setError("Palvelimeen ei saatu yhteyttä");
@@ -70,6 +72,7 @@ export default function Register() {
         flexDirection="column"
         alignItems="center"
         minHeight="100vh"
+        marginTop={5}
       >
         <Typography variant="h4" gutterBottom>
           Rekisteröidy

@@ -8,3 +8,5 @@ Päivä:      Aika: 2h    Mitä tein: loin kansio rakennelman, middleware,contro
 Päivä:      Aika: 1h    Mitä tein: Loin rekisteröitymisen toiminnalisuuden frontin ja backendin välilä, nyt käyttäjiä voi luoda.            
             YHT:  6h
 ----------------------
+
+Päivä: 1.9	Aika: 1h	Mitä tein: Rakensin nopean kirjautumisen ja etusivun, tällä hetkellä kirjautumien ilman tokenia.

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Container, Box, Typography, Button } from "@mui/material";
-import DrawerAppBar from "../components/AppBar";
+import AppBar from "../components/AppBar";
 
 function Etusivu() {
   const [user, setUser] = useState(null);
@@ -26,16 +26,14 @@ function Etusivu() {
   return (
     <Container maxWidth="md">
       <Box py={6}>
-        <DrawerAppBar />
+        <AppBar joukkueNimi={user?.joukkue_nimi} /> {/* väliteteään propsina */}
         <Typography variant="h4" gutterBottom>
           Tervetuloa {user?.nimi ? user.nimi : "!"}
         </Typography>
-
         <Typography variant="body1" sx={{ mb: 3 }}>
           Tämä on etusivu. Tänne voidaan listata esim. oman joukkueesi tulevat
           tapahtumat tai pikalinkit.
         </Typography>
-
         <Button variant="outlined" onClick={handleLogout}>
           Kirjaudu ulos
         </Button>

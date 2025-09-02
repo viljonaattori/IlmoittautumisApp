@@ -25,7 +25,14 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/etusivu" element={<Etusivu />} />
+          <Route
+            path="/etusivu"
+            element={
+              <ProtectedRoute>
+                <Etusivu />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </Router>
     </ThemeProvider>

@@ -1,12 +1,14 @@
-import { Children } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
-function ProtectedRoute({ Children }) {
+// Protekcted routen avulla varmistetaan, ettei kuka tahansa voi mennä esim. etusivulle ilman kirjautumista eli ilman tokenia.
+
+function ProtectedRoute({ children }) {
   const token = localStorage.getItem("token"); // Hakee tokenin localmuistista
+  const location = useLocation();
   if (!token) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/" replace state={{ from: location }} />;
   }
-  return Children;
+  return children;
 }
 
 export default ProtectedRoute;

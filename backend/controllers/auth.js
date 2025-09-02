@@ -69,17 +69,21 @@ router.post("/login", async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    // Validointi
     if (!email || !password) {
       return res
         .status(400)
         .json({ error: "Sähköposti ja salasana vaaditaan" });
     }
 
-    // Haetaan käyttäjä
-    const rows = await query("SELECT * FROM `käyttäjät` WHERE email = ?", [
-      email,
-    ]);
+    // Haetaan käyttäjä + joukkueen nimi JOINilla
+    const rows = await query(
+      `SELECT k.id, k.email, k.nimi, k.salasana_hash, k.joukkue_id, j.nimi AS joukkue_nimi
+       FROM käyttäjät k
+       LEFT JOIN joukkueet j ON k.joukkue_id = j.id
+       WHERE k.email = ?`,
+      [email]
+    );
+
     const user = rows[0];
     if (!user) {
       return res
@@ -93,10 +97,15 @@ router.post("/login", async (req, res, next) => {
       return res.status(401).json({ error: "Virheellinen salasana" });
     }
 
-    // Mariadb palauttaa id: big intinä niin muunnetaan se tavallliseksi numeroksi
-    const payload = { id: Number(user.id), email: user.email, nimi: user.nimi };
+    // Palautetaan myös käyttäjän joukkue
+    const payload = {
+      id: Number(user.id),
+      email: user.email,
+      nimi: user.nimi,
+      joukkue_id: Number(user.joukkue_id),
+      joukkue_nimi: user.joukkue_nimi,
+    };
 
-    // Luodaan tokeni
     const token = jwt.sign(payload, JWT.secret, {
       expiresIn: JWT.expiresIn || "7d",
     });
@@ -106,5 +115,4 @@ router.post("/login", async (req, res, next) => {
     next(err);
   }
 });
-
 module.exports = router;

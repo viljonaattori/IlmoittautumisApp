@@ -1,0 +1,4 @@
+### Hae joukkueen jäsenet
+GET http://localhost:3001/api/joukkueet/members
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsImVtYWlsIjoid2lsaS5hdXZpbmVuQGdtYWlsLmNvbSIsIm5pbWkiOiJWaWxpIEF1dmluZW4iLCJqb3Vra3VlX2lkIjo0LCJqb3Vra3VlX25pbWkiOiJQb1UgZWR1c3R1cyIsImlhdCI6MTc1NjkwNzY5MywiZXhwIjoxNzU3NTEyNDkzfQ.Q2KxwrOg5Z_q6so740Pm7J612e-vDZVoSqwQGuE4cuc
+Content-Type: application/json

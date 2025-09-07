@@ -49,7 +49,7 @@ function MenneetTapahtumat() {
         {events.map((e) => (
           <ListItem key={e.id}>
             <ListItemText
-              primary={`${e.tyyppi} @ ${e.paikka}`}
+              primary={`${e.tyyppi} | ${e.paikka}`}
               secondary={`${new Date(e.aika).toLocaleString()} — ${
                 e.kuvaus || ""
               }`}

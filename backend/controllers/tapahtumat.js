@@ -2,19 +2,31 @@ const router = require("express").Router();
 const { query } = require("../db/pool");
 const { authRequired } = require("../utils/middleware");
 
-// Tulevat tapahtumat
+// Tulevat tapahtumat + osallistujatilastot
 router.get("/", authRequired, async (req, res, next) => {
   try {
     const rows = await query(
-      "SELECT id, joukkue_id, tyyppi, paikka, aika, kuvaus FROM tapahtumat WHERE joukkue_id = ? AND aika >= NOW() ORDER BY aika ASC",
-      [req.user.joukkue_id]
+      `SELECT 
+         t.id, t.joukkue_id, t.tyyppi, t.paikka, t.aika, t.kuvaus,
+         SUM(o.status = 'osallistun') AS osallistujat,
+         SUM(o.status = 'en_osallistu') AS ei_osallistujat,
+         (SELECT status 
+            FROM osallistumiset 
+           WHERE tapahtuma_id = t.id AND kayttaja_id = ?
+           LIMIT 1) AS oma_status
+       FROM tapahtumat t
+       LEFT JOIN osallistumiset o ON o.tapahtuma_id = t.id
+       WHERE t.joukkue_id = ? AND t.aika >= NOW()
+       GROUP BY t.id
+       ORDER BY t.aika ASC`,
+      [req.user.id, req.user.joukkue_id]
     );
+
     res.json(rows);
   } catch (err) {
     next(err);
   }
 });
-
 // Menneet tapahtumat
 router.get("/menneet", authRequired, async (req, res, next) => {
   try {
@@ -65,6 +77,23 @@ router.get("/:id/osallistuminen", authRequired, async (req, res, next) => {
     }
 
     res.json({ status: rows[0].status });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Tapahtuman kaikki osallistujat
+router.get("/:id/osallistujat", authRequired, async (req, res, next) => {
+  try {
+    const rows = await query(
+      `SELECT k.id, k.nimi, k.email, o.status
+       FROM osallistumiset o
+       JOIN käyttäjät k ON o.kayttaja_id = k.id
+       WHERE o.tapahtuma_id = ?`,
+      [req.params.id]
+    );
+
+    res.json(rows);
   } catch (err) {
     next(err);
   }

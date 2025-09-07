@@ -91,7 +91,7 @@ export default function TulevatTapahtumat() {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ status }), // 'yes' | 'no'
+          body: JSON.stringify({ status }),
         }
       );
       const data = await res.json();
@@ -174,24 +174,42 @@ export default function TulevatTapahtumat() {
                       <Button
                         size="small"
                         variant={
-                          e.oma_status === "yes" ? "contained" : "outlined"
+                          e.oma_status === "osallistun"
+                            ? "contained"
+                            : "outlined"
                         }
                         color="success"
                         startIcon={<CheckIcon />}
-                        onClick={() => handleRespond(e.id, "yes")}
+                        onClick={() => handleRespond(e.id, "osallistun")}
                         disabled={savingId === e.id}
+                        sx={{
+                          ...(e.oma_status === "osallistun" && {
+                            backgroundColor: "success.main",
+                            color: "white",
+                            "&:hover": { backgroundColor: "success.dark" },
+                          }),
+                        }}
                       >
                         Osallistun
                       </Button>
                       <Button
                         size="small"
                         variant={
-                          e.oma_status === "no" ? "contained" : "outlined"
+                          e.oma_status === "en_osallistu"
+                            ? "contained"
+                            : "outlined"
                         }
                         color="error"
                         startIcon={<CloseIcon />}
-                        onClick={() => handleRespond(e.id, "no")}
+                        onClick={() => handleRespond(e.id, "en_osallistu")}
                         disabled={savingId === e.id}
+                        sx={{
+                          ...(e.oma_status === "en_osallistu" && {
+                            backgroundColor: "error.main",
+                            color: "white",
+                            "&:hover": { backgroundColor: "error.dark" },
+                          }),
+                        }}
                       >
                         En osallistu
                       </Button>

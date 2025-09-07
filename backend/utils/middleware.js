@@ -1,6 +1,7 @@
 const morgan = require("morgan");
 const jwt = require("jsonwebtoken");
 const { JWT } = require("./config");
+const { query } = require("../db/pool");
 
 // Request logger
 const requestLogger = morgan("dev");
@@ -13,6 +14,7 @@ const tokenExtractor = (req, _res, next) => {
   next();
 };
 
+// Vaatii voimassa olevan tokenin
 const authRequired = (req, res, next) => {
   if (!req.token) {
     return res.status(401).json({ error: "Token puuttuu" });
@@ -37,6 +39,38 @@ const userExtractor = (req, _res, next) => {
   next();
 };
 
+// vain YP
+const requireTeamAdmin = async (req, res, next) => {
+  try {
+    if (!req.user?.joukkue_id || !req.user?.id) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    // Haetaan joukkueen ylläpitäjä
+    const rows = await query(
+      "SELECT `ylläpitäjä_id` FROM `joukkueet` WHERE id = ?",
+      [req.user.joukkue_id]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "Joukkuetta ei löydy" });
+    }
+
+    const adminId = Number(rows[0]["ylläpitäjä_id"]);
+    if (Number(req.user.id) !== adminId) {
+      return res
+        .status(403)
+        .json({
+          error: "Vain joukkueen ylläpitäjä voi suorittaa tämän toimen.",
+        });
+    }
+
+    next();
+  } catch (err) {
+    next(err);
+  }
+};
+
 const unknownEndpoint = (_req, res) => {
   res.status(404).json({ error: "unknown endpoint" });
 };
@@ -53,4 +87,5 @@ module.exports = {
   authRequired,
   unknownEndpoint,
   errorHandler,
+  requireTeamAdmin,
 };

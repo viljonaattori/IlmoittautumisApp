@@ -1,31 +1,19 @@
+// src/pages/Etusivu.jsx
 import { useEffect, useState } from "react";
-import { Container, Box, Typography, Button, Grid } from "@mui/material";
-import AppBar from "../components/AppBar";
+import { Box, Grid, Typography } from "@mui/material";
 import MembersPanel from "../components/membersPanel";
 import TulevatTapahtumat from "../components/TulevatTapahtumat";
 import MenneetTapahtumat from "../components/MenneetTapahtumat";
 
-function Etusivu() {
+export default function Etusivu() {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
   const [members, setMembers] = useState([]);
   const [memLoading, setMemLoading] = useState(false);
   const [memError, setMemError] = useState(null);
 
   useEffect(() => {
-    const savedToken = localStorage.getItem("token");
-    const userStr = localStorage.getItem("user");
-
-    if (savedToken) {
-      setToken(savedToken);
-      console.log("Token:", token);
-    }
-    if (userStr) setUser(JSON.parse(userStr));
-  }, []);
-
-  useEffect(() => {
-    const userStr = localStorage.getItem("user");
-    if (userStr) setUser(JSON.parse(userStr));
+    const u = localStorage.getItem("user");
+    if (u) setUser(JSON.parse(u));
     fetchMembers();
   }, []);
 
@@ -47,53 +35,32 @@ function Etusivu() {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    window.location.href = "/"; // takaisin login-sivulle
-  };
+  // Tarkistetaan onko käyttäjä YP
+  const isAdmin = user && members.some((m) => m.id === user.id && m.is_admin);
 
   return (
-    <Container maxWidth="lg">
-      {/* AppBar koko leveys */}
-      <AppBar joukkueNimi={user?.joukkue_nimi} onLogout={handleLogout} />
-
-      {/* Jos AppBar on position="fixed", tämä työntää sisällön alas AppBarin korkeuden verran */}
-      <Box sx={(theme) => ({ ...theme.mixins.toolbar })} />
-
-      {/* Jaetaan etusivu kahteen osaan */}
-      <Grid
-        container
-        columnSpacing={12}
-        rowSpacing={4}
-        alignItems="flex-start"
-        mt={2}
-      >
-        <Grid item xs={12} md={6} sx={{ pr: 6 }}>
-          <Box>
-            <Typography variant="h4" gutterBottom sx={{ mb: 4 }}>
-              Tervetuloa {user?.nimi ? user.nimi : "!"}
-            </Typography>
-
-            <TulevatTapahtumat />
-          </Box>
+    <Box>
+      <Grid container columnSpacing={8} rowSpacing={4} alignItems="flex-start">
+        <Grid item xs={12} md={7}>
+          <Typography variant="h4" sx={{ mb: 3 }}>
+            Tervetuloa {user?.nimi ?? "!"}
+          </Typography>
+          {/* Välitä canDelete vain ylläpitäjälle */}
+          <TulevatTapahtumat canDelete={isAdmin} />
         </Grid>
 
-        {/* Jäsenlista */}
-        <Grid item xs={12} md={6} sx={{ pr: 6 }}>
-          <Box>
-            <MembersPanel
-              members={members}
-              loading={memLoading}
-              error={memError}
-              onReload={fetchMembers}
-            />
+        <Grid item xs={12} md={5}>
+          <MembersPanel
+            members={members}
+            loading={memLoading}
+            error={memError}
+            onReload={fetchMembers}
+          />
+          <Box sx={{ mt: 3 }}>
             <MenneetTapahtumat />
           </Box>
         </Grid>
       </Grid>
-    </Container>
+    </Box>
   );
 }
-
-export default Etusivu;

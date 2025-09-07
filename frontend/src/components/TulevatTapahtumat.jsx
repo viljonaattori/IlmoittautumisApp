@@ -11,7 +11,7 @@ import {
 import RefreshIcon from "@mui/icons-material/Refresh";
 import TapahtumaCard from "./TapahtumaCard";
 
-export default function TulevatTapahtumat() {
+export default function TulevatTapahtumat({ canDelete = false }) {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(false);
   const [savingId, setSavingId] = useState(null);
@@ -69,6 +69,11 @@ export default function TulevatTapahtumat() {
     }
   };
 
+  // Tapahtumakortin poistaminen
+  const handleDeleted = (id) => {
+    setEvents((prev) => prev.filter((ev) => ev.id !== id));
+  };
+
   return (
     <Card variant="outlined" sx={{ borderRadius: 3 }}>
       <CardHeader
@@ -95,6 +100,8 @@ export default function TulevatTapahtumat() {
                 total={events.length}
                 savingId={savingId}
                 handleRespond={handleRespond}
+                canDelete={canDelete}
+                onDeleted={handleDeleted}
               />
             ))}
           </Box>

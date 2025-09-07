@@ -133,11 +133,6 @@ function DrawerAppBar({ window, joukkueNimi, onLogout }) {
           {drawer}
         </Drawer>
       </nav>
-
-      {/* Tilavaraus AppBarille */}
-      <Box component="main" sx={{ p: 3 }}>
-        <Toolbar />
-      </Box>
     </Box>
   );
 }

@@ -1,26 +1,36 @@
+// src/components/Layout.jsx
+import { useEffect, useState } from "react";
 import { Box, Container } from "@mui/material";
-import AppBar from "./components/AppBar";
-import Footer from "./components/Footer";
-import { Outlet } from "react-router-dom";
+import AppBar from "./AppBar"; // <- sun DrawerAppBar
+import Footer from "./Footer";
+import { Outlet, useNavigate } from "react-router-dom";
 
 export default function Layout() {
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        minHeight: "100vh",
-      }}
-    >
-      {/* Ylävalikko */}
-      <AppBar />
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
-      {/* Sivun sisältö */}
-      <Container sx={{ flex: 1, mt: 2 }}>
+  useEffect(() => {
+    const u = localStorage.getItem("user");
+    if (u) setUser(JSON.parse(u));
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/"); // takaisin login-sivulle
+  };
+
+  return (
+    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      {/* VÄLITÄ propsit! */}
+      <AppBar joukkueNimi={user?.joukkue_nimi} onLogout={handleLogout} />
+
+      {/* Jos haluat spacerin, pidä se vain TÄÄLLÄ (älä AppBar-komponentissa) */}
+      <Box sx={(t) => ({ ...t.mixins.toolbar })} />
+
+      <Container maxWidth="lg" sx={{ flex: 1, py: 3 }}>
         <Outlet />
       </Container>
-
-      {/* Footer */}
       <Footer />
     </Box>
   );

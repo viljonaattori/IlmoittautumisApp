@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { query } = require("../db/pool");
-const { authRequired } = require("../utils/middleware");
+const { authRequired, requireTeamAdmin } = require("../utils/middleware");
 
 // Tulevat tapahtumat + osallistujatilastot
 router.get("/", authRequired, async (req, res, next) => {
@@ -98,5 +98,32 @@ router.get("/:id/osallistujat", authRequired, async (req, res, next) => {
     next(err);
   }
 });
+
+router.delete(
+  "/:id",
+  authRequired,
+  requireTeamAdmin,
+  async (req, res, next) => {
+    try {
+      const tapahtumaId = Number(req.params.id);
+
+      // Poistetaan vain omasta joukkueesta
+      const result = await query(
+        "DELETE FROM `tapahtumat` WHERE id = ? AND joukkue_id = ?",
+        [tapahtumaId, req.user.joukkue_id]
+      );
+
+      if (result.affectedRows === 0) {
+        return res
+          .status(404)
+          .json({ error: "Tapahtumaa ei löydy tältä joukkueelta" });
+      }
+
+      res.json({ ok: true, deleted: result.affectedRows });
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 
 module.exports = router;

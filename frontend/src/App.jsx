@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Register from "./pages/rekisteröinti";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Etusivu from "./pages/Etusivu";
+import Layout from "./components/Layout";
 
 function App() {
   const darkTheme = createTheme({
@@ -26,13 +27,15 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route
-            path="/etusivu"
             element={
               <ProtectedRoute>
-                <Etusivu />
+                <Layout /> {/* kaikki sisällöt Layoutin sisälle */}
               </ProtectedRoute>
             }
-          />
+          >
+            <Route path="/etusivu" element={<Etusivu />} />
+            {/* Lisää myöhemmin esim. <Route path="/tapahtumat" element={<Tapahtumat />} /> */}
+          </Route>
         </Routes>
       </Router>
     </ThemeProvider>

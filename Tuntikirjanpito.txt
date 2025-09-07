@@ -11,4 +11,7 @@ Päivä:      Aika: 1h    Mitä tein: Loin rekisteröitymisen toiminnalisuuden f
 Päivä: 1.9	Aika: 1h	Mitä tein: Rakensin nopean kirjautumisen ja etusivun, tällä hetkellä kirjautumien ilman tokenia.
 Päivä: 2.9	Aika: 1h	Mitä tein: ProtectedRoute korjattu ja kirjautuneen käyttäjän joukkue lisätty appbariin. 
 Päivä: 3.9	Aika: 2h	Mitä tein: backendiin kutsu jäsenten ja ylläpitäjän hakuun. Fronttiin: jäsenpaneeli etusivulle.
+
 Päivä: 7.9  Aika: 3h    Mitä tein: menneille ja tuleville tapahtumille tehty endpointit backendiin ja fronttiin tapahtumien näyttämine.
+Päivä:      Aika: 3h    Mitä tein: Ylläpitäjän tarkistus kirjautumiseen ja poisto toiminto tapahtumille. kortit korjattu paremman näköiseksi ja osallisumis toiminto lisätty.
+----------------------

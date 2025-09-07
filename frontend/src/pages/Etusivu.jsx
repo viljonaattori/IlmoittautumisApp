@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Container, Box, Typography, Button, Grid } from "@mui/material";
 import AppBar from "../components/AppBar";
 import MembersPanel from "../components/membersPanel";
+import TulevatTapahtumat from "../components/TulevatTapahtumat";
+import MenneetTapahtumat from "../components/MenneetTapahtumat";
 
 function Etusivu() {
   const [user, setUser] = useState(null);
@@ -54,31 +56,31 @@ function Etusivu() {
   return (
     <Container maxWidth="lg">
       {/* AppBar koko leveys */}
-      <AppBar joukkueNimi={user?.joukkue_nimi} />
+      <AppBar joukkueNimi={user?.joukkue_nimi} onLogout={handleLogout} />
 
       {/* Jos AppBar on position="fixed", tämä työntää sisällön alas AppBarin korkeuden verran */}
       <Box sx={(theme) => ({ ...theme.mixins.toolbar })} />
 
-      {/* Kaksi kaistaa samalla tasolla */}
-      <Grid container spacing={4} alignItems="flex-start" mt={2}>
-        {/* VASEN: Tervetuloa + nappi */}
-        <Grid item xs={12} md={6}>
+      {/* Jaetaan etusivu kahteen osaan */}
+      <Grid
+        container
+        columnSpacing={12}
+        rowSpacing={4}
+        alignItems="flex-start"
+        mt={2}
+      >
+        <Grid item xs={12} md={6} sx={{ pr: 6 }}>
           <Box>
-            <Typography variant="h4" gutterBottom>
+            <Typography variant="h4" gutterBottom sx={{ mb: 4 }}>
               Tervetuloa {user?.nimi ? user.nimi : "!"}
             </Typography>
-            <Typography variant="body1" sx={{ mb: 3 }}>
-              Tämä on etusivu. Tänne voidaan listata esim. oman joukkueesi
-              tulevat tapahtumat tai pikalinkit.
-            </Typography>
-            <Button variant="outlined" onClick={handleLogout}>
-              Kirjaudu ulos
-            </Button>
+
+            <TulevatTapahtumat />
           </Box>
         </Grid>
 
-        {/* OIKEA: Jäsenlista */}
-        <Grid item xs={12} md={6}>
+        {/* Jäsenlista */}
+        <Grid item xs={12} md={6} sx={{ pr: 6 }}>
           <Box>
             <MembersPanel
               members={members}
@@ -86,6 +88,7 @@ function Etusivu() {
               error={memError}
               onReload={fetchMembers}
             />
+            <MenneetTapahtumat />
           </Box>
         </Grid>
       </Grid>

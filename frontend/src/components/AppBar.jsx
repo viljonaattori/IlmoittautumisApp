@@ -10,15 +10,18 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import ListItemIcon from "@mui/material/ListItemIcon";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const drawerWidth = 240;
 const navItems = ["Etusivu", "Tapahtumat", "Tietoa"];
 
-function DrawerAppBar({ window, joukkueNimi }) {
+function DrawerAppBar({ window, joukkueNimi, onLogout }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -31,11 +34,21 @@ function DrawerAppBar({ window, joukkueNimi }) {
       <List>
         {navItems.map((item) => (
           <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }}>
+            <ListItemButton sx={{ textAlign: "left" }}>
               <ListItemText primary={item} />
             </ListItemButton>
           </ListItem>
         ))}
+
+        {/* Logout myös mobiilivalikkoon */}
+        <ListItem disablePadding>
+          <ListItemButton sx={{ textAlign: "left" }} onClick={onLogout}>
+            <ListItemIcon>
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText primary="Kirjaudu ulos" />
+          </ListItemButton>
+        </ListItem>
       </List>
     </Box>
   );
@@ -46,8 +59,9 @@ function DrawerAppBar({ window, joukkueNimi }) {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar component="nav">
+      <AppBar component="nav" position="fixed">
         <Toolbar>
+          {/* Hampurilainen mobiilille */}
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -57,11 +71,14 @@ function DrawerAppBar({ window, joukkueNimi }) {
           >
             <MenuIcon />
           </IconButton>
+
           {joukkueNimi && (
-            <Typography variant="body1" sx={{ ml: 2 }}>
+            <Typography variant="body1" sx={{ ml: 1 }}>
               Joukkue: {joukkueNimi}
             </Typography>
           )}
+
+          {/* Keskitetty otsikko desktopilla */}
           <Typography
             variant="h6"
             component="div"
@@ -74,6 +91,7 @@ function DrawerAppBar({ window, joukkueNimi }) {
             Ilmoittautumis App
           </Typography>
 
+          {/* Yläreunan nav-napit vain desktopilla */}
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
               <Button key={item} sx={{ color: "#fff" }}>
@@ -81,17 +99,29 @@ function DrawerAppBar({ window, joukkueNimi }) {
               </Button>
             ))}
           </Box>
+
+          {/* Logout-ikoni aina oikealla (desktop & mobiili) */}
+          <Tooltip title="Kirjaudu ulos">
+            <IconButton
+              color="inherit"
+              onClick={onLogout}
+              sx={{ ml: 1 }}
+              aria-label="kirjaudu ulos"
+            >
+              <LogoutIcon />
+            </IconButton>
+          </Tooltip>
         </Toolbar>
       </AppBar>
+
+      {/* Drawer mobiilille */}
       <nav>
         <Drawer
           container={container}
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
+          ModalProps={{ keepMounted: true }}
           sx={{
             display: { xs: "block", sm: "none" },
             "& .MuiDrawer-paper": {
@@ -103,6 +133,8 @@ function DrawerAppBar({ window, joukkueNimi }) {
           {drawer}
         </Drawer>
       </nav>
+
+      {/* Tilavaraus AppBarille */}
       <Box component="main" sx={{ p: 3 }}>
         <Toolbar />
       </Box>
@@ -111,11 +143,9 @@ function DrawerAppBar({ window, joukkueNimi }) {
 }
 
 DrawerAppBar.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window: PropTypes.func,
+  joukkueNimi: PropTypes.string,
+  onLogout: PropTypes.func, // <-- lisätty
 };
 
 export default DrawerAppBar;

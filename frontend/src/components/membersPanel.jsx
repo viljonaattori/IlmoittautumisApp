@@ -50,7 +50,7 @@ export default function membersPanel({
         variant="caption"
         sx={{ display: "block", mt: 1, opacity: 0.8 }}
       >
-        Puuttuuko joku? Lisää adminin kautta.
+        Puuttuuko joku? Liittymislinkki tulossa..
       </Typography>
     </Paper>
   );

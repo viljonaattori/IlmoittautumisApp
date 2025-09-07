@@ -13,7 +13,20 @@ const tokenExtractor = (req, _res, next) => {
   next();
 };
 
-// ehkä myöhemmin
+const authRequired = (req, res, next) => {
+  if (!req.token) {
+    return res.status(401).json({ error: "Token puuttuu" });
+  }
+  try {
+    req.user = jwt.verify(req.token, JWT.secret);
+    return next();
+  } catch (e) {
+    return res
+      .status(403)
+      .json({ error: "Virheellinen tai vanhentunut token" });
+  }
+};
+
 const userExtractor = (req, _res, next) => {
   if (!req.token) return next();
   try {
@@ -37,6 +50,7 @@ module.exports = {
   requestLogger,
   tokenExtractor,
   userExtractor,
+  authRequired,
   unknownEndpoint,
   errorHandler,
 };

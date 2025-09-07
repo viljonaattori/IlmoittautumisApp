@@ -1,8 +1,9 @@
 const router = require("express").Router();
 const { query } = require("../db/pool");
+const { authRequired } = require("../utils/middleware");
 
 // GET /api/joukkueet
-router.get("/", async (_req, res, next) => {
+router.get("/", authRequired, async (_req, res, next) => {
   try {
     const rows = await query(
       "SELECT id, nimi FROM `joukkueet` ORDER BY nimi ASC"
@@ -16,7 +17,7 @@ router.get("/", async (_req, res, next) => {
 });
 
 // Haetan jäsenet ja YP
-router.get("/members", async (req, res, next) => {
+router.get("/members", authRequired, async (req, res, next) => {
   try {
     if (!req.user?.joukkue_id) {
       return res.status(400).json({ error: "Käyttäjältä puuttuu joukkue" });

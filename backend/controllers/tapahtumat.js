@@ -99,6 +99,7 @@ router.get("/:id/osallistujat", authRequired, async (req, res, next) => {
   }
 });
 
+// Vain joukkueen YP voi tehdä deleten
 router.delete(
   "/:id",
   authRequired,
@@ -125,5 +126,32 @@ router.delete(
     }
   }
 );
+
+// Tapahtuman luonti VAIN YP
+router.post("/", authRequired, requireTeamAdmin, async (req, res, next) => {
+  try {
+    const { tyyppi, paikka, aika, kuvaus } = req.body;
+
+    if (!tyyppi || !paikka || !aika) {
+      return res.status(400).json({ error: "Pakolliset kentät puuttuvat" });
+    }
+
+    const result = await query(
+      `INSERT INTO tapahtumat (joukkue_id, tyyppi, paikka, aika, kuvaus) VALUES (?,?,?,?,?)`,
+      [req.user.joukkue_id, tyyppi, paikka, aika, kuvaus || null]
+    );
+
+    res.status(201).json({
+      id: Number(result.insertId),
+      joukkue_id: req.user.joukkue_id,
+      tyyppi,
+      paikka,
+      aika,
+      kuvaus,
+    });
+  } catch (err) {
+    next(err);
+  }
+});
 
 module.exports = router;

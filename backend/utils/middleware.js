@@ -39,7 +39,7 @@ const userExtractor = (req, _res, next) => {
   next();
 };
 
-// vain YP
+// voidaan käytttää toiminnoissa missä käyttäjän on oltava ylläpitäjä esim, tapahtumien poisto
 const requireTeamAdmin = async (req, res, next) => {
   try {
     if (!req.user?.joukkue_id || !req.user?.id) {
@@ -58,11 +58,9 @@ const requireTeamAdmin = async (req, res, next) => {
 
     const adminId = Number(rows[0]["ylläpitäjä_id"]);
     if (Number(req.user.id) !== adminId) {
-      return res
-        .status(403)
-        .json({
-          error: "Vain joukkueen ylläpitäjä voi suorittaa tämän toimen.",
-        });
+      return res.status(403).json({
+        error: "Vain joukkueen ylläpitäjä voi suorittaa tämän toimen.",
+      });
     }
 
     next();

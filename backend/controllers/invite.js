@@ -3,9 +3,9 @@ const { query } = require("../db/pool");
 const { authRequired, requireTeamAdmin } = require("../utils/middleware");
 const { v4: uuidv4 } = require("uuid");
 
-// Liittymislinkki
+// Liittymislinkki joka vanhenee 7 päivän kuluessa
 router.post(
-  "/:team_id",
+  "/:teamId",
   authRequired,
   requireTeamAdmin,
   async (req, res, next) => {
@@ -28,3 +28,5 @@ router.post(
     }
   }
 );
+
+module.exports = router;

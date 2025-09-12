@@ -1,6 +1,6 @@
 ### Luo uusi liittymislinkki
-POST http://localhost:3001/api/invite/<TEAM_ID>
+POST http://localhost:3001/api/invite/4
 Content-Type: application/json
-Authorization: Bearer <JWT_TOKEN>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsImVtYWlsIjoid2lsaS5hdXZpbmVuQGdtYWlsLmNvbSIsIm5pbWkiOiJWaWxpIEF1dmluZW4iLCJqb3Vra3VlX2lkIjo0LCJqb3Vra3VlX25pbWkiOiJQb1UgZWR1c3R1cyIsImlhdCI6MTc1NzY1NDIzMiwiZXhwIjoxNzU4MjU5MDMyfQ.Ldu9fPZR_XtecNgIAb41ry4f8W8396a6YbSlFHNLIEY
 
 {}

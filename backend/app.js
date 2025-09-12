@@ -11,6 +11,7 @@ const {
 const authRouter = require("./controllers/auth");
 const joukkueetRouter = require("./controllers/joukkueet");
 const tapahtumatRouter = require("./controllers/tapahtumat");
+const inviteRoutes = require("./routes/invite");
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(userExtractor);
 app.use("/api/auth", authRouter);
 app.use("/api/joukkueet", joukkueetRouter);
 app.use("/api/tapahtumat", tapahtumatRouter);
+app.use("api/invite", inviteRoutes);
 
 app.get("/", (_req, res) => res.send("API ok"));
 

@@ -1,13 +1,13 @@
 import { Paper, Stack, Chip, Typography, Box, Button } from "@mui/material";
 
-export default function membersPanel({
+export default function MembersPanel({
   members = [],
   loading,
   error,
   onReload,
 }) {
   return (
-    <Paper elevation={3} sx={{ p: 2 }}>
+    <Paper elevation={3} sx={{ p: 2, width: "100%" }}>
       <Box
         display="flex"
         alignItems="center"

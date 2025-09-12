@@ -43,7 +43,7 @@ function MenneetTapahtumat() {
   if (error) return <Typography color="error">{error}</Typography>;
 
   return (
-    <Box>
+    <Box sx={{ width: "100%" }}>
       <Typography variant="h6">Menneet tapahtumat</Typography>
       <List>
         {events.map((e) => (

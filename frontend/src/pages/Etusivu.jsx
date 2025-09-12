@@ -39,36 +39,37 @@ export default function Etusivu() {
 
   const isAdmin = user && members.some((m) => m.id === user.id && m.is_admin);
 
-  // Kutsutaan kun luodaan uusi tapahtuma
   const handleCreated = () => setRefreshTick((t) => t + 1);
 
   return (
-    <Box>
-      <Grid container columnSpacing={8} rowSpacing={4} alignItems="flex-start">
-        <Grid item xs={12} md={7}>
+    <Box sx={{ flexGrow: 1, p: 2 }}>
+      <Grid container spacing={6} alignItems="flex-start">
+        <Grid item xs>
+          {/* vasen sisältö */}
           <Typography variant="h4" sx={{ mb: 3 }}>
             Tervetuloa {user?.nimi ?? "!"}
           </Typography>
-
-          {/* Adminille luontilomake */}
           {isAdmin && (
             <Box sx={{ mb: 3 }}>
               <TapahtumaForm onCreated={handleCreated} />
             </Box>
           )}
-
-          {/* Tulevat tapahtumat + poisto-oikeus + refresh-signaali */}
-          <TulevatTapahtumat canDelete={isAdmin} refreshSignal={refreshTick} />
+          <Box sx={{ mt: 3, maxHeight: 500, overflowY: "auto" }}>
+            <TulevatTapahtumat
+              canDelete={isAdmin}
+              refreshSignal={refreshTick}
+            />
+          </Box>
         </Grid>
 
-        <Grid item xs={12} md={5}>
+        <Grid item sx={{ width: 400 }}>
           <MembersPanel
             members={members}
             loading={memLoading}
             error={memError}
             onReload={fetchMembers}
           />
-          <Box sx={{ mt: 3 }}>
+          <Box sx={{ mt: 3, maxHeight: 300, overflowY: "auto" }}>
             <MenneetTapahtumat />
           </Box>
         </Grid>

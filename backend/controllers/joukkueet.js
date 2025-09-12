@@ -38,7 +38,7 @@ router.get("/members", authRequired, async (req, res, next) => {
 
     // Haetaan kaikki joukkueeseen kuuluvat
     const rows = await query(
-      "SELECT id, nimi, email FROM `käyttäjät` WHERE joukkue_id = ? ORDER BY nimi ASC",
+      "SELECT id, nimi, email, joukkue_id FROM `käyttäjät` WHERE joukkue_id = ? ORDER BY nimi ASC",
       [req.user.joukkue_id]
     );
 
@@ -46,6 +46,7 @@ router.get("/members", authRequired, async (req, res, next) => {
       id: Number(r.id),
       nimi: r.nimi,
       email: r.email,
+      joukkue_id: Number(r.joukkue_id),
       is_admin: Number(r.id) === adminId,
     }));
 

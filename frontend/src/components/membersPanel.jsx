@@ -1,11 +1,42 @@
 import { Paper, Stack, Chip, Typography, Box, Button } from "@mui/material";
-
+import { useState } from "react";
 export default function MembersPanel({
   members = [],
   loading,
   error,
   onReload,
 }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleGetInvite = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!members[0]) {
+        alert("Joukkuetta ei löytynyt");
+        return;
+      }
+
+      const teamId = members[0].joukkue_id; // käytetään joukkueen id:tä
+
+      const res = await fetch(`http://localhost:3001/api/invite/${teamId}`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Virhe linkin luonnissa");
+
+      // Kopioidaan leikepöydälle
+      await navigator.clipboard.writeText(data.invitelink);
+
+      // Näytetään ilmoitus painikkeessa
+      setCopied(true);
+      setTimeout(() => setCopied(false), 4000);
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
   return (
     <Paper elevation={3} sx={{ p: 2, width: "100%" }}>
       <Box
@@ -46,12 +77,17 @@ export default function MembersPanel({
         ))}
       </Stack>
 
-      <Typography
-        variant="caption"
-        sx={{ display: "block", mt: 1, opacity: 0.8 }}
-      >
-        Puuttuuko joku? Liittymislinkki tulossa..
-      </Typography>
+      {/* Vihreä painike liittymislinkin kopiointiin */}
+      <Box sx={{ mt: 2 }}>
+        <Button
+          fullWidth
+          variant="contained"
+          color="success"
+          onClick={handleGetInvite}
+        >
+          {copied ? "Linkki kopioitu!" : "Kopioi liittymislinkki"}
+        </Button>
+      </Box>
     </Paper>
   );
 }

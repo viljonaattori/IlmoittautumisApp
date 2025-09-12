@@ -21,3 +21,4 @@ Päivä:      Aika: 3h    Mitä tein: Ylläpitäjän tarkistus kirjautumiseen ja
 Päivä: 9.9  Aika: 2h     Mitä tein: tapahtumien luomislomake Back ja frontti tehty toimivaksi.
 
 Päivä: 12.9 Aika: 3h     Mitä tein: Testailin ja korjailin komponenttien responsiivisuutta, sekä tappelin gridin kanssa. Suunnittelin miten toteutan liittymislinkin joukkueelle.
+Päivä: 12.9 Aika: 3h     Mitä tein: Painiskelin miten saan liittymislinkin toimimaan, data tuli hieman väärässä muodossa aluksi, mutta toimii nyt.

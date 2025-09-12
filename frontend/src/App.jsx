@@ -6,6 +6,7 @@ import Register from "./pages/rekisteröinti";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Etusivu from "./pages/Etusivu";
 import Layout from "./components/Layout";
+import Join from "./pages/Join";
 
 function App() {
   const darkTheme = createTheme({
@@ -26,6 +27,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/join/:token" element={<Join />} />
           <Route
             element={
               <ProtectedRoute>

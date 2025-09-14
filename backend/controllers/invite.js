@@ -61,4 +61,25 @@ router.get("/bytoken/:token", async (req, res, next) => {
   }
 });
 
+// Merkitään linkki käytetyksi, jos joku rekisteröityy sen kautta
+router.post("/use/:token", async (req, res, next) => {
+  try {
+    const { token } = req.params;
+
+    // Päivitetään token käytetyksi
+    const result = await query(
+      "UPDATE invite SET used = TRUE WHERE token = ? ",
+      [token]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Kutsua ei löytynyt" });
+    }
+
+    res.json({ message: "Kutsu merkitty käytetyksi " });
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;

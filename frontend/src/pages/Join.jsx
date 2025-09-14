@@ -40,7 +40,7 @@ export default function Join() {
     fetchInvite();
   }, [token]);
 
-  // Rekisteröinti
+  // Rekisteröinti linkin kautta
   const handleRegister = async (e) => {
     e.preventDefault();
     setError(null);
@@ -60,6 +60,11 @@ export default function Join() {
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Rekisteröinti epäonnistui");
+
+      // Merkitään kutsu käytetyksi
+      await fetch(`http://localhost:3001/api/invite/use/${token}`, {
+        method: "POST",
+      });
 
       setSuccess("Liittyminen onnistui!");
       localStorage.setItem("token", data.token);

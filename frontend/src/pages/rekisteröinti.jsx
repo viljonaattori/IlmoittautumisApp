@@ -10,6 +10,7 @@ import {
   InputLabel,
   FormControl,
 } from "@mui/material";
+import emailValidator from "../utils/emailValidator";
 
 export default function Register() {
   const [joukkueet, setJoukkueet] = useState([]);
@@ -30,6 +31,12 @@ export default function Register() {
   const handleRegister = async (e) => {
     e.preventDefault();
     setError(null);
+
+    // ääkkösten validointi
+    if (!emailValidator(email)) {
+      setError("Sähköpostiosoite ei saa sisältää ääkkösiä");
+      return;
+    }
 
     try {
       const body = { email, password, nimi, joukkue_id: joukkueId };

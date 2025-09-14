@@ -8,6 +8,7 @@ import {
   Button,
   CircularProgress,
 } from "@mui/material";
+import emailValidator from "../utils/emailValidator";
 
 export default function Join() {
   const { token } = useParams(); // Otetaan joukkueid parametreista
@@ -44,6 +45,12 @@ export default function Join() {
   const handleRegister = async (e) => {
     e.preventDefault();
     setError(null);
+
+    // ääkkösten validointi
+    if (!emailValidator(email)) {
+      setError("Sähköpostiosoite ei saa sisältää ääkkösiä");
+      return;
+    }
     try {
       const body = {
         email,

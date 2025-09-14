@@ -4,6 +4,7 @@ const router = require("express").Router();
 const { query } = require("../db/pool");
 const { JWT } = require("../utils/config");
 const { errorHandler } = require("../utils/middleware");
+const emailValidator = require("../utils/emailValidator");
 
 // POST /api/auth/register
 router.post("/register", async (req, res, next) => {
@@ -15,6 +16,11 @@ router.post("/register", async (req, res, next) => {
       return res
         .status(400)
         .json({ error: "sähköposti, salasana, nimi ja joukkue vaaditaan" });
+    }
+    if (!emailValidator(email)) {
+      return res
+        .status(400)
+        .json({ error: "Sähköposti ei saa sisältää ääkkösiä" });
     }
     if (password.length < 6) {
       return res

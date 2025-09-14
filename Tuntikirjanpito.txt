@@ -14,6 +14,8 @@ Päivä:      Aika: 3h    Mitä tein: MariaDB opiskelua, datan muuntaminen sopiv
 Päivä: 2.9	Aika: 1h	Mitä tein: ProtectedRoute korjattu ja kirjautuneen käyttäjän joukkue lisätty appbariin. 
 Päivä: 3.9	Aika: 2h	Mitä tein: backendiin kutsu jäsenten ja ylläpitäjän hakuun. Fronttiin: jäsenpaneeli etusivulle.
 
+Päivä: 4.9  Aika: 3h    Mitä tein: Taulujen yhdistelyn opiskelu MariaDB:ssä. 
+
 Päivä: 7.9  Aika: 3h    Mitä tein: menneille ja tuleville tapahtumille tehty endpointit backendiin ja fronttiin tapahtumien näyttämine.
 Päivä:      Aika: 3h    Mitä tein: Ylläpitäjän tarkistus kirjautumiseen ja poisto toiminto tapahtumille. kortit korjattu paremman näköiseksi ja osallisumis toiminto lisätty.
 ----------------------
@@ -24,3 +26,4 @@ Päivä: 12.9 Aika: 3h     Mitä tein: Testailin ja korjailin komponenttien resp
 Päivä: 12.9 Aika: 3h     Mitä tein: Painiskelin miten saan liittymislinkin toimimaan, data tuli hieman väärässä muodossa aluksi, mutta toimii nyt.
 
 Päivä: 14.9 Aika: 1h     Mitä tein: Korjasin liittymislinkin, sitä ei merkitty käytetyksi rekisteröinnin jälkeen.
+Päivä:      Aika: 3h     Mitä tein: Opiskelu sähköpostin ääkkösten validoinnista ja sen toteuttaminen fronttiin ja backendiin.

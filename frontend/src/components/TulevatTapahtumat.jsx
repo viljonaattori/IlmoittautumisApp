@@ -75,7 +75,7 @@ export default function TulevatTapahtumat({ canDelete = false }) {
   };
 
   return (
-    <Card variant="outlined" sx={{ borderRadius: 3 }}>
+    <Card variant="outlined" sx={{ borderRadius: 3, minWidth: 500 }}>
       <CardHeader
         title="Tulevat tapahtumat"
         action={

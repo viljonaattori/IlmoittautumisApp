@@ -5,67 +5,47 @@ const { query } = require("../db/pool");
 const { JWT } = require("../utils/config");
 const { errorHandler } = require("../utils/middleware");
 const emailValidator = require("../utils/emailValidator");
+const {
+  validateUserInput,
+  ensureEmailUnique,
+  ensureTeamExists,
+  createTeamIfNeeded,
+  createUser,
+  setTeamAdminIfNeeded,
+  createJwt,
+} = require("./authFunctions");
 
 // POST /api/auth/register
 router.post("/register", async (req, res, next) => {
   try {
-    const { email, password, nimi, joukkue_id } = req.body;
+    const { email, password, nimi, joukkue_id, new_team_name, mode } = req.body;
+    const actualMode = mode || "join";
 
-    // Validointi
-    if (!email || !password || !nimi || !joukkue_id) {
-      return res
-        .status(400)
-        .json({ error: "sähköposti, salasana, nimi ja joukkue vaaditaan" });
-    }
-    if (!emailValidator(email)) {
-      return res
-        .status(400)
-        .json({ error: "Sähköposti ei saa sisältää ääkkösiä" });
-    }
-    if (password.length < 6) {
-      return res
-        .status(400)
-        .json({ error: "salasanan pituus vähintään 6 merkkiä" });
+    await validateUserInput({ email, password, nimi });
+    await ensureEmailUnique(email);
+
+    if (actualMode === "join") {
+      if (!joukkue_id)
+        return res.status(400).json({ error: "Joukkue on valittava" });
+      await ensureTeamExists(joukkue_id);
     }
 
-    // Tarkastetaan onko käyttäjä olemassa
-    const existing = await query("SELECT id FROM `käyttäjät` WHERE email = ?", [
-      email,
-    ]);
-    if (existing.length > 0) {
-      return res.status(409).json({ error: "Sähköposti on jo käytössä" });
+    let teamId = joukkue_id;
+    if (actualMode === "create") {
+      teamId = await createTeamIfNeeded(actualMode, new_team_name);
     }
 
-    // Tarkastetaan löytyykö joukkuetta
-    const team = await query("SELECT id FROM `joukkueet` WHERE id = ?", [
-      joukkue_id,
-    ]);
-    if (team.length === 0) {
-      return res.status(400).json({ error: "virheellinen joukkue_id" });
-    }
+    const userId = await createUser({ email, password, nimi, teamId });
+    await setTeamAdminIfNeeded(actualMode, userId, teamId);
 
-    // Salasanan Hash
-    const salasana_hash = await bcrypt.hash(password, 10);
+    const user = { id: userId, email, nimi, joukkue_id: Number(teamId) };
+    const token = createJwt(user);
 
-    // Insert
-    const result = await query(
-      "INSERT INTO `käyttäjät` (email, salasana_hash, nimi, joukkue_id) VALUES (?, ?, ?, ?)",
-      [email, salasana_hash, nimi, joukkue_id]
-    );
-
-    const id = Number(result.insertId);
-    const user = { id, email, nimi, joukkue_id: Number(joukkue_id) };
-
-    // Luo JWT
-    const token = jwt.sign(user, JWT.secret, {
-      expiresIn: JWT.expiresIn || "7d",
-    });
-    return res.status(201).json({ user, token });
+    res.status(201).json({ user, token });
   } catch (err) {
-    // MariaDB:n duplikaatti varmistus
-    if (err && err.code === "ER_DUP_ENTRY") {
-      return res.status(409).json({ error: "sähköposti on jo käytössä" });
-    }
+    if (err.status) return res.status(err.status).json({ error: err.message });
+    if (err.code === "ER_DUP_ENTRY")
+      return res.status(409).json({ error: "Sähköposti on jo käytössä" });
     next(err);
   }
 });

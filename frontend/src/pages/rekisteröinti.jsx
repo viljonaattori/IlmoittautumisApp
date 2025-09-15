@@ -24,6 +24,8 @@ export default function Register() {
   const [joukkueId, setJoukkueId] = useState("");
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [mode, setMode] = useState("join");
+  const [newTeamName, setNewTeamName] = useState("");
 
   const navigate = useNavigate();
 
@@ -46,7 +48,14 @@ export default function Register() {
     }
 
     try {
-      const body = { email, password, nimi, joukkue_id: joukkueId };
+      const body = {
+        email,
+        password,
+        nimi,
+        mode,
+        joukkue_id: mode === "join" ? joukkueId : null,
+        new_team_name: mode === "create" ? newTeamName : null,
+      };
 
       const res = await fetch("http://localhost:3001/api/auth/register", {
         method: "POST",
@@ -57,7 +66,6 @@ export default function Register() {
       const data = await res.json();
 
       if (!res.ok) {
-        // backend palautti virheen
         setError(data.error || "Rekisteröinti epäonnistui");
         return;
       }
@@ -83,15 +91,11 @@ export default function Register() {
     <Container maxWidth="sm">
       <IconButton
         onClick={() => navigate("/")}
-        sx={{
-          position: "absolute",
-          top: 16,
-          left: 16,
-          color: "white",
-        }}
+        sx={{ position: "absolute", top: 16, left: 16, color: "white" }}
       >
         <ArrowBackIcon />
       </IconButton>
+
       <Box
         display="flex"
         flexDirection="column"
@@ -102,7 +106,7 @@ export default function Register() {
         <img
           src={logo}
           alt="Logo"
-          style={{ width: "150px", marginBottom: "20px" }}
+          style={{ width: "150px", marginBottom: 20 }}
         />
         <Typography variant="h4" gutterBottom>
           Rekisteröidy
@@ -132,27 +136,55 @@ export default function Register() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
+          {/* Valinta: Liity tai Luo uusi */}
           <FormControl fullWidth margin="normal">
-            <InputLabel id="joukkue-label">Joukkue</InputLabel>
+            <InputLabel id="mode-label">Valinta</InputLabel>
             <Select
-              labelId="joukkue-label"
-              value={joukkueId}
-              onChange={(e) => setJoukkueId(e.target.value)}
+              labelId="mode-label"
+              value={mode}
+              onChange={(e) => setMode(e.target.value)}
             >
-              {joukkueet.map((j) => (
-                <MenuItem key={j.id} value={j.id}>
-                  {j.nimi}
-                </MenuItem>
-              ))}
+              <MenuItem value="join">
+                Liity olemassa olevaan joukkueeseen
+              </MenuItem>
+              <MenuItem value="create">Luo uusi joukkue</MenuItem>
             </Select>
           </FormControl>
+
+          {/* Näytetään joukkueen valinta vain jos mode=join */}
+          {mode === "join" && (
+            <FormControl fullWidth margin="normal">
+              <InputLabel id="joukkue-label">Joukkue</InputLabel>
+              <Select
+                labelId="joukkue-label"
+                value={joukkueId}
+                onChange={(e) => setJoukkueId(e.target.value)}
+              >
+                {joukkueet.map((j) => (
+                  <MenuItem key={j.id} value={j.id}>
+                    {j.nimi}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          )}
+
+          {/* Näytetään uuden joukkueen nimi jos mode=create */}
+          {mode === "create" && (
+            <TextField
+              label="Uuden joukkueen nimi"
+              fullWidth
+              margin="normal"
+              value={newTeamName}
+              onChange={(e) => setNewTeamName(e.target.value)}
+            />
+          )}
 
           {error && (
             <Typography color="error" variant="body2" sx={{ mt: 1 }}>
               {error}
             </Typography>
           )}
-
           {success && (
             <Typography color="success.main" variant="body2" sx={{ mt: 1 }}>
               {success}

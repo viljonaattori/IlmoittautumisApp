@@ -24,9 +24,12 @@ export default function Etusivu() {
       setMemLoading(true);
       setMemError(null);
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:3001/api/joukkueet/members", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await fetch(
+        "https://ilmoittautumisapp.onrender.com/api/joukkueet/members",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Virhe haussa");
       setMembers(data.members || []);

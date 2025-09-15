@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Container, TextField, Button, Typography, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import logo from "/Images/logo.png";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -45,9 +46,14 @@ function Login() {
         justifyContent="center"
         minHeight="100vh"
       >
+        <img
+          src={logo}
+          alt="Logo"
+          style={{ width: "150px", marginBottom: "20px" }}
+        />
+
         <Typography variant="h4" gutterBottom>
-          {/* gutterBottom lisää automaattisesti marginaalia alareunan väliin */}
-          IlmoittautumisApp
+          TeamSign
         </Typography>
 
         <form onSubmit={handleLogin} style={{ width: "100%" }}>

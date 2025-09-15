@@ -9,8 +9,12 @@ import {
   Select,
   InputLabel,
   FormControl,
+  IconButton,
 } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useNavigate } from "react-router-dom";
 import emailValidator from "../utils/emailValidator";
+import logo from "/Images/logo.png";
 
 export default function Register() {
   const [joukkueet, setJoukkueet] = useState([]);
@@ -20,6 +24,9 @@ export default function Register() {
   const [joukkueId, setJoukkueId] = useState("");
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+
+  const navigate = useNavigate();
+
   // Haetaan joukkueet backista kun komponentti lataa
   useEffect(() => {
     fetch("http://localhost:3001/api/joukkueet")
@@ -74,6 +81,17 @@ export default function Register() {
 
   return (
     <Container maxWidth="sm">
+      <IconButton
+        onClick={() => navigate("/")}
+        sx={{
+          position: "absolute",
+          top: 16,
+          left: 16,
+          color: "white",
+        }}
+      >
+        <ArrowBackIcon />
+      </IconButton>
       <Box
         display="flex"
         flexDirection="column"
@@ -81,6 +99,11 @@ export default function Register() {
         minHeight="100vh"
         marginTop={5}
       >
+        <img
+          src={logo}
+          alt="Logo"
+          style={{ width: "150px", marginBottom: "20px" }}
+        />
         <Typography variant="h4" gutterBottom>
           Rekisteröidy
         </Typography>

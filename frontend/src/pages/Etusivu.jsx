@@ -5,6 +5,8 @@ import MembersPanel from "../components/membersPanel";
 import TulevatTapahtumat from "../components/TulevatTapahtumat";
 import MenneetTapahtumat from "../components/MenneetTapahtumat";
 import TapahtumaForm from "../components/TapahtumaForm";
+import { useNavigate } from "react-router-dom";
+import DeleteTeam from "../components/DeleteTeam";
 
 export default function Etusivu() {
   const [user, setUser] = useState(null);
@@ -12,6 +14,8 @@ export default function Etusivu() {
   const [memLoading, setMemLoading] = useState(false);
   const [memError, setMemError] = useState(null);
   const [refreshTick, setRefreshTick] = useState(0);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const u = localStorage.getItem("user");
@@ -72,6 +76,11 @@ export default function Etusivu() {
           <Box sx={{ mt: 3, maxHeight: 300, overflowY: "auto" }}>
             <MenneetTapahtumat />
           </Box>
+          <DeleteTeam
+            teamId={user?.joukkue_id}
+            token={localStorage.getItem("token")}
+            onDeleted={() => navigate("/")} // esim. ohjaa etusivulle
+          />
         </Grid>
       </Grid>
     </Box>

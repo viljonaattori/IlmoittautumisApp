@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { query } = require("../db/pool");
-const { authRequired } = require("../utils/middleware");
+const { authRequired, requireTeamAdmin } = require("../utils/middleware");
 
 // GET /api/joukkueet
 router.get("/", async (_req, res, next) => {
@@ -55,5 +55,23 @@ router.get("/members", authRequired, async (req, res, next) => {
     next(err);
   }
 });
+
+// Joukkueen poisto ID perusteella
+router.delete(
+  "/:id",
+  authRequired,
+  requireTeamAdmin,
+  async (req, res, next) => {
+    try {
+      const joukkueId = Number(req.params.id);
+
+      await query("DELETE FROM `joukkueet` WHERE id = ?", [joukkueId]);
+
+      res.json({ message: "Joukkue poistettu onnistuneesti" });
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 
 module.exports = router;

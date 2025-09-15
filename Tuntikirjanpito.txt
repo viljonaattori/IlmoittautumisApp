@@ -27,3 +27,8 @@ Päivä: 12.9 Aika: 3h     Mitä tein: Painiskelin miten saan liittymislinkin to
 
 Päivä: 14.9 Aika: 1h     Mitä tein: Korjasin liittymislinkin, sitä ei merkitty käytetyksi rekisteröinnin jälkeen.
 Päivä:      Aika: 3h     Mitä tein: Opiskelu sähköpostin ääkkösten validoinnista ja sen toteuttaminen fronttiin ja backendiin.
+
+Päivä: 15.9 Aika: 4h     Mitä tein: Kokeilin laittaa sovellusta pyörimään renderiin ja huomasin, että se ei voi pyöri jos tietokanta on local (:D) ja selvitin miten saan oman mariaDB pilveen, nyt se pyörii filess.io:ssa ja backend yhteys toimii.
+                                    Opiskelin myös tietokannan viennin, sekä tuonnin toiseen tietokantaan mariaDBssä
+
+Omana muistutuksena, lisää fronttiin osoitukset niin kehitys kuin render osoitteisiin.

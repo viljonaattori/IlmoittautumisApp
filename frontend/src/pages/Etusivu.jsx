@@ -100,11 +100,13 @@ export default function Etusivu() {
           <Box sx={{ mt: 3, maxHeight: 300, overflowY: "auto" }}>
             <MenneetTapahtumat />
           </Box>
-          <DeleteTeam
-            teamId={user?.joukkue_id}
-            token={localStorage.getItem("token")}
-            onDeleted={() => navigate("/")} // esim. ohjaa etusivulle
-          />
+          <Box sx={{ paddingTop: 5 }}>
+            <DeleteTeam
+              teamId={user?.joukkue_id}
+              token={localStorage.getItem("token")}
+              onDeleted={() => navigate("/")} // esim. ohjaa etusivulle
+            />
+          </Box>
         </Grid>
       </Grid>
     </Box>

@@ -17,6 +17,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import LogoutIcon from "@mui/icons-material/Logout";
+import logo from "/Images/logo.png";
 
 const drawerWidth = 240;
 const navItems = ["Etusivu", "Tapahtumat", "Luo joukkueesi"];
@@ -78,19 +79,25 @@ function DrawerAppBar({ window, joukkueNimi, onLogout }) {
             </Typography>
           )}
 
-          {/* Keskitetty otsikko desktopilla */}
-          <Typography
-            variant="h6"
-            component="div"
+          {/* Keskitetty otsikko + logo desktopilla */}
+          <Box
             sx={{
               flexGrow: 1,
-              display: { xs: "none", sm: "block" },
-              textAlign: "center",
+              display: { xs: "none", sm: "flex" },
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 1, // pieni väli tekstin ja logon väliin
             }}
           >
-            Ilmoittautumis App
-          </Typography>
-
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ display: "flex", alignItems: "center" }}
+            >
+              TeamSign
+            </Typography>
+            <Box component="img" src={logo} alt="Logo" sx={{ height: 32 }} />
+          </Box>
           {/* Yläreunan nav-napit vain desktopilla */}
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
@@ -100,7 +107,7 @@ function DrawerAppBar({ window, joukkueNimi, onLogout }) {
             ))}
           </Box>
 
-          {/* Logout-ikoni aina oikealla (desktop & mobiili) */}
+          {/* Logout icon aina oikealla desktop ja mobiili */}
           <Tooltip title="Kirjaudu ulos">
             <IconButton
               color="inherit"

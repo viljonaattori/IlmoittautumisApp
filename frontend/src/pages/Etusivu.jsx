@@ -7,60 +7,26 @@ import MenneetTapahtumat from "../components/MenneetTapahtumat";
 import TapahtumaForm from "../components/TapahtumaForm";
 import { useNavigate } from "react-router-dom";
 import DeleteTeam from "../components/DeleteTeam";
+import useMembers from "../hooks/useMembers";
 
 export default function Etusivu() {
   const [user, setUser] = useState(null);
-  const [members, setMembers] = useState([]);
-  const [memLoading, setMemLoading] = useState(false);
-  const [memError, setMemError] = useState(null);
   const [refreshTick, setRefreshTick] = useState(0);
-
   const navigate = useNavigate();
+
+  // kaikki jäsenlogiikka hoituu hookissa
+  const {
+    members,
+    loading: memLoading,
+    error: memError,
+    fetchMembers,
+    deleteMember,
+  } = useMembers();
 
   useEffect(() => {
     const u = localStorage.getItem("user");
     if (u) setUser(JSON.parse(u));
-    fetchMembers();
   }, []);
-
-  const fetchMembers = async () => {
-    try {
-      setMemLoading(true);
-      setMemError(null);
-      const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:3001/api/joukkueet/members", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Virhe haussa");
-      setMembers(data.members || []);
-    } catch (e) {
-      setMemError(e.message);
-    } finally {
-      setMemLoading(false);
-    }
-  };
-
-  const deleteMember = async (id) => {
-    if (!window.confirm("Poistetaanko tämä jäsen?")) return;
-    try {
-      const token = localStorage.getItem("token");
-      const res = await fetch(
-        `http://localhost:3001/api/joukkueet/members/${id}`,
-        {
-          method: "DELETE",
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || "Poisto epäonnistui");
-      }
-      fetchMembers(); // päivitetään jäsenlista
-    } catch (err) {
-      alert(err.message);
-    }
-  };
 
   const isAdmin = user && members.some((m) => m.id === user.id && m.is_admin);
 
@@ -70,15 +36,16 @@ export default function Etusivu() {
     <Box sx={{ flexGrow: 1, p: 2 }}>
       <Grid container spacing={6} alignItems="flex-start">
         <Grid item xs>
-          {/* vasen sisältö */}
           <Typography variant="h4" sx={{ mb: 3 }}>
             Tervetuloa {user?.nimi ?? "!"}
           </Typography>
+
           {isAdmin && (
             <Box sx={{ mb: 3 }}>
               <TapahtumaForm onCreated={handleCreated} />
             </Box>
           )}
+
           <Box sx={{ mt: 3, maxHeight: 500, overflowY: "auto" }}>
             <TulevatTapahtumat
               canDelete={isAdmin}
@@ -97,16 +64,19 @@ export default function Etusivu() {
             onDeleteMember={deleteMember}
           />
 
-          <Box sx={{ mt: 3, maxHeight: 300, overflowY: "auto" }}>
+          <Box sx={{ mt: 3, maxHeight: 280, overflowY: "auto" }}>
             <MenneetTapahtumat />
           </Box>
-          <Box sx={{ paddingTop: 5 }}>
-            <DeleteTeam
-              teamId={user?.joukkue_id}
-              token={localStorage.getItem("token")}
-              onDeleted={() => navigate("/")} // esim. ohjaa etusivulle
-            />
-          </Box>
+
+          {isAdmin && (
+            <Box sx={{ paddingTop: 5 }}>
+              <DeleteTeam
+                teamId={user?.joukkue_id}
+                token={localStorage.getItem("token")}
+                onDeleted={() => navigate("/")}
+              />
+            </Box>
+          )}
         </Grid>
       </Grid>
     </Box>

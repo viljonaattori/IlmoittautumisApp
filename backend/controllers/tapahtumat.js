@@ -136,6 +136,15 @@ router.post("/", authRequired, requireTeamAdmin, async (req, res, next) => {
       return res.status(400).json({ error: "Pakolliset kentät puuttuvat" });
     }
 
+    // Estetään tapahtumanluonti menneeseen aikaan
+    const now = new Date();
+    const tapahtumaAika = new Date(aika);
+    if (tapahtumaAika < now) {
+      return res
+        .status(400)
+        .json({ error: "Tapahtuma aika ei ole kelvonninen" });
+    }
+
     const result = await query(
       `INSERT INTO tapahtumat (joukkue_id, tyyppi, paikka, aika, kuvaus) VALUES (?,?,?,?,?)`,
       [req.user.joukkue_id, tyyppi, paikka, aika, kuvaus || null]

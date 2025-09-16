@@ -26,9 +26,9 @@ CREATE TABLE IF NOT EXISTS `invite` (
   UNIQUE KEY `token` (`token`),
   KEY `fk_invite_team` (`team_id`),
   CONSTRAINT `fk_invite_team` FOREIGN KEY (`team_id`) REFERENCES `joukkueet` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table ilmoittautumisapp.invite: ~14 rows (suunnilleen)
+-- Dumping data for table ilmoittautumisapp.invite: ~17 rows (suunnilleen)
 INSERT INTO `invite` (`id`, `team_id`, `token`, `created_at`, `expires_at`, `used`) VALUES
 	(1, 4, 'aa690e9a-3b79-4a44-9803-fdb218ece346', '2025-09-12 05:21:27', '2025-09-19 05:21:27', 0),
 	(2, 4, 'e1e82092-2bd0-40b1-83fe-33070323fa3b', '2025-09-12 05:23:25', '2025-09-19 05:23:25', 0),
@@ -52,14 +52,14 @@ INSERT INTO `invite` (`id`, `team_id`, `token`, `created_at`, `expires_at`, `use
 CREATE TABLE IF NOT EXISTS `joukkueet` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nimi` varchar(200) NOT NULL,
-  `ylläpitäjä_id` int(11) NOT NULL,
+  `ylläpitäjä_id` int(11) DEFAULT NULL,
   `luotu` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   KEY `ylläpitäjä_id` (`ylläpitäjä_id`),
   CONSTRAINT `joukkueet_ibfk_1` FOREIGN KEY (`ylläpitäjä_id`) REFERENCES `käyttäjät` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table ilmoittautumisapp.joukkueet: ~6 rows (suunnilleen)
+-- Dumping data for table ilmoittautumisapp.joukkueet: ~7 rows (suunnilleen)
 INSERT INTO `joukkueet` (`id`, `nimi`, `ylläpitäjä_id`, `luotu`) VALUES
 	(1, 'Jokipojat U20', 9, '2025-08-31 17:45:17'),
 	(2, 'Karelia U15', 9, '2025-08-31 17:45:17'),
@@ -67,8 +67,7 @@ INSERT INTO `joukkueet` (`id`, `nimi`, `ylläpitäjä_id`, `luotu`) VALUES
 	(4, 'PoU edustus', 15, '2025-08-31 17:46:32'),
 	(5, 'Viu', 9, '2025-08-31 17:46:32'),
 	(6, 'Kataja U12', 9, '2025-08-31 17:46:32'),
-	(11, 'Vaivion Tarmo', 23, '2025-09-15 12:33:41'),
-	(12, 'HC RIIGA', 25, '2025-09-15 12:54:31');
+	(11, 'Vaivion Tarmo', 23, '2025-09-15 12:33:41');
 
 -- Dumping structure for taulu ilmoittautumisapp.käyttäjät
 CREATE TABLE IF NOT EXISTS `käyttäjät` (
@@ -76,33 +75,31 @@ CREATE TABLE IF NOT EXISTS `käyttäjät` (
   `email` varchar(255) NOT NULL,
   `salasana_hash` varchar(255) NOT NULL,
   `nimi` varchar(120) NOT NULL,
-  `joukkue_id` int(11) NOT NULL,
+  `joukkue_id` int(11) DEFAULT NULL,
   `luotu` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  UNIQUE KEY `email` (`email`),
+  KEY `joukkue_id` (`joukkue_id`),
+  CONSTRAINT `käyttäjät_ibfk_1` FOREIGN KEY (`joukkue_id`) REFERENCES `joukkueet` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table ilmoittautumisapp.käyttäjät: ~13 rows (suunnilleen)
+-- Dumping data for table ilmoittautumisapp.käyttäjät: ~15 rows (suunnilleen)
 INSERT INTO `käyttäjät` (`id`, `email`, `salasana_hash`, `nimi`, `joukkue_id`, `luotu`) VALUES
-	(9, 'vili.auvinen@gmail.com', '$2b$10$S/iSAgpb5YpcGE.GHj7E5OlPSkE.Sn/P6FMhpK1frcXlXcqi80E8K', 'Viljonaattori', 0, '2025-08-31 15:04:09'),
-	(10, 'test.test@gmail.com', '$2b$10$DsIndkGa2c2AwCE4SYA5C.xNP5Vnilpg7ZLdVyqKFa6FvZlOzFKp.', 'testikäyttäjä', 4, '2025-08-31 17:54:16'),
-	(11, 'Pinja.Luotolampi@gmail.com', '$2b$10$JSoP6J2idp40ImTpGxfBqefKL5InjHg8UbpWt4lxLzgHyP86C2tF2', 'Pinja Luotolampi', 5, '2025-08-31 18:03:18'),
-	(12, 'Mikko.kurvinen@are.fi', '$2b$10$FTm.vrqpbmw9XKqPV08isu1ago.JcWVglCPFNa9bdSA5Li76Z40Ja', 'Mikko Kurvinen', 1, '2025-08-31 18:06:45'),
-	(13, 'Testi2@testi.outlook.com', '$2b$10$0viq5MtWCBl4MTmuIQzVzOnm0dMqapEUp/TpJVU4wglt76YK8hqD.', 'testi käyttäjä', 2, '2025-08-31 18:13:05'),
-	(14, 'testi3.testi3@gmail.com', '$2b$10$sfoh7brnnD0ExVVYbhH3c.KojBTJxhiO.VOdOo0b9f5L1uYQ44Jki', 'Matti Meikäläinen', 4, '2025-09-01 12:55:53'),
-	(15, 'wili.auvinen@gmail.com', '$2b$10$db0IJbj6UZkO/2U3W9jVZO8ENnpQeAwJ2FyIEfQaMomK31V85EZhO', 'Vili Auvinen', 4, '2025-09-01 13:45:46'),
-	(16, 'ville.matti@gmail.com', '$2b$10$hFzKOl3v31ywp/oJeaUQju6v8moL/OyI/MFTVEfky915DtgNdFo/C', 'Ville-matti', 5, '2025-09-02 14:43:18'),
-	(17, 'testimies@testimies.fi', '$2b$10$dr5Gwgbj0VGMwOCLRkJcC.ideSNuZaaHGkqeCGeDJl9RTclUjibPG', 'testimies', 4, '2025-09-07 11:03:41'),
-	(18, 'testi12@testi.com', '$2b$10$4oKC5a7P9vLup.7bnM94OerW9aaX2mMsro2UCpygoC4datFnp/bUq', 'Viljami Perttula', 4, '2025-09-09 15:25:00'),
-	(19, 'Santtu.XÅÅÅL@hotmail.com', '$2b$10$cAZJulGtzRzugv0CYBFtAOSJT5M24o8BOsNFnuh1kjvJ90uJ2xB0u', 'Santtu Nykänen', 4, '2025-09-12 11:49:29'),
-	(20, 'Jare.villegalle@gmail.com', '$2b$10$njIxj4oqg06xwfbrEVXdDuTVGEIYUgMmEDmeNkUW.HR9cUbHvHgZi', 'JVG', 4, '2025-09-14 04:55:07'),
-	(21, 'Rene.kuikka@gmail.com', '$2b$10$iwHcNCYLfgZW7TqUE52TReUIhOZu56ETIEl1K4zAe8S6i4nlCzsAC', 'Rene Kuikka', 4, '2025-09-14 05:25:06'),
-	(22, 'joonasmustimustonen@gmail.com', '$2b$10$nWqx3wSsrTwlHujZPNqMbOjeLtDjjhsKxtK.61eqTxP9cnrKrXUOW', 'Jones mustonen', 2, '2025-09-15 12:23:17'),
-	(23, 'joonas.mustonen@gmail.com', '$2b$10$ooGTIS.c9jGsB9OIa7fnQeXkG5vqPO25hVQF5EjVGbRG4RqXsl6My', 'Joonas Mustonen', 11, '2025-09-15 12:33:41'),
-	(24, 'Jouni.auvinen@gmail.com', '$2b$10$CPfjqrHdPYscry5/kcjjkul6KPrMplYT8z/e3YElseguC3PSkJqzS', 'Jouni Auvinen', 11, '2025-09-15 12:44:44'),
-	(25, 'rikkakihveli@hotmail.com', '$2b$10$MevVBsyJPjTAVQoD43oBBONTB361uAu2XgLKKVP/2BK6g9Pzyq3zS', 'rikka kihveli', 12, '2025-09-15 12:54:31'),
-	(26, 'tarja.halonen@hotmail.com', '$2b$10$11ziK40WnlN87pO05LIsH.HSRkGFYe5cI4uceFyj2fVC/j4qIbIK6', 'Tarja Halonen', 13, '2025-09-15 12:58:04'),
-	(27, 'otto.laakkonen@gmail.com', '$2b$10$Z6K0tNmNJvIZNP0vzro3EeAiRTfGF6tkMiw/1c7fmsEDRotm.PCIO', 'Otto Laakkonen', 13, '2025-09-15 13:07:44');
+	(9, 'vili.auvinen@gmail.com', '$2b$10$S/iSAgpb5YpcGE.GHj7E5OlPSkE.Sn/P6FMhpK1frcXlXcqi80E8K', 'Viljonaattori', 5, '2025-08-31 12:04:09'),
+	(11, 'Pinja.Luotolampi@gmail.com', '$2b$10$JSoP6J2idp40ImTpGxfBqefKL5InjHg8UbpWt4lxLzgHyP86C2tF2', 'Pinja Luotolampi', 5, '2025-08-31 15:03:18'),
+	(12, 'Mikko.kurvinen@are.fi', '$2b$10$FTm.vrqpbmw9XKqPV08isu1ago.JcWVglCPFNa9bdSA5Li76Z40Ja', 'Mikko Kurvinen', 1, '2025-08-31 15:06:45'),
+	(13, 'Testi2@testi.outlook.com', '$2b$10$0viq5MtWCBl4MTmuIQzVzOnm0dMqapEUp/TpJVU4wglt76YK8hqD.', 'testi käyttäjä', 2, '2025-08-31 15:13:05'),
+	(14, 'testi3.testi3@gmail.com', '$2b$10$sfoh7brnnD0ExVVYbhH3c.KojBTJxhiO.VOdOo0b9f5L1uYQ44Jki', 'Matti Meikäläinen', 4, '2025-09-01 09:55:53'),
+	(15, 'wili.auvinen@gmail.com', '$2b$10$db0IJbj6UZkO/2U3W9jVZO8ENnpQeAwJ2FyIEfQaMomK31V85EZhO', 'Vili Auvinen', 4, '2025-09-01 10:45:46'),
+	(16, 'ville.matti@gmail.com', '$2b$10$hFzKOl3v31ywp/oJeaUQju6v8moL/OyI/MFTVEfky915DtgNdFo/C', 'Ville-matti', 5, '2025-09-02 11:43:18'),
+	(17, 'testimies@testimies.fi', '$2b$10$dr5Gwgbj0VGMwOCLRkJcC.ideSNuZaaHGkqeCGeDJl9RTclUjibPG', 'testimies', 4, '2025-09-07 08:03:41'),
+	(18, 'testi12@testi.com', '$2b$10$4oKC5a7P9vLup.7bnM94OerW9aaX2mMsro2UCpygoC4datFnp/bUq', 'Viljami Perttula', 4, '2025-09-09 12:25:00'),
+	(19, 'Santtu.XÅÅÅL@hotmail.com', '$2b$10$cAZJulGtzRzugv0CYBFtAOSJT5M24o8BOsNFnuh1kjvJ90uJ2xB0u', 'Santtu Nykänen', 4, '2025-09-12 08:49:29'),
+	(20, 'Jare.villegalle@gmail.com', '$2b$10$njIxj4oqg06xwfbrEVXdDuTVGEIYUgMmEDmeNkUW.HR9cUbHvHgZi', 'JVG', 4, '2025-09-14 01:55:07'),
+	(21, 'Rene.kuikka@gmail.com', '$2b$10$iwHcNCYLfgZW7TqUE52TReUIhOZu56ETIEl1K4zAe8S6i4nlCzsAC', 'Rene Kuikka', 4, '2025-09-14 02:25:06'),
+	(22, 'joonasmustimustonen@gmail.com', '$2b$10$nWqx3wSsrTwlHujZPNqMbOjeLtDjjhsKxtK.61eqTxP9cnrKrXUOW', 'Jones mustonen', 2, '2025-09-15 09:23:17'),
+	(23, 'joonas.mustonen@gmail.com', '$2b$10$ooGTIS.c9jGsB9OIa7fnQeXkG5vqPO25hVQF5EjVGbRG4RqXsl6My', 'Joonas Mustonen', 11, '2025-09-15 09:33:41'),
+	(24, 'Jouni.auvinen@gmail.com', '$2b$10$CPfjqrHdPYscry5/kcjjkul6KPrMplYT8z/e3YElseguC3PSkJqzS', 'Jouni Auvinen', 11, '2025-09-15 09:44:44');
 
 -- Dumping structure for taulu ilmoittautumisapp.osallistumiset
 CREATE TABLE IF NOT EXISTS `osallistumiset` (
@@ -116,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `osallistumiset` (
   KEY `kayttaja_id` (`kayttaja_id`),
   CONSTRAINT `osallistumiset_ibfk_1` FOREIGN KEY (`tapahtuma_id`) REFERENCES `tapahtumat` (`id`) ON DELETE CASCADE,
   CONSTRAINT `osallistumiset_ibfk_2` FOREIGN KEY (`kayttaja_id`) REFERENCES `käyttäjät` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Dumping data for table ilmoittautumisapp.osallistumiset: ~16 rows (suunnilleen)
 INSERT INTO `osallistumiset` (`id`, `tapahtuma_id`, `kayttaja_id`, `status`, `paivitetty`) VALUES
@@ -150,9 +147,9 @@ CREATE TABLE IF NOT EXISTS `tapahtumat` (
   PRIMARY KEY (`id`),
   KEY `joukkue_id` (`joukkue_id`),
   CONSTRAINT `tapahtumat_ibfk_1` FOREIGN KEY (`joukkue_id`) REFERENCES `joukkueet` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table ilmoittautumisapp.tapahtumat: ~21 rows (suunnilleen)
+-- Dumping data for table ilmoittautumisapp.tapahtumat: ~28 rows (suunnilleen)
 INSERT INTO `tapahtumat` (`id`, `joukkue_id`, `tyyppi`, `paikka`, `aika`, `kuvaus`, `luotu`) VALUES
 	(1, 1, 'harjoitus', 'Urheiluhalli A', '2025-09-10 18:00:00', 'Viikon perusharjoitukset', '2025-09-07 07:01:14'),
 	(2, 1, 'peli', 'Keskuskenttä', '2025-09-14 15:00:00', 'Sarjapeli vastustajaa FC Testi vastaan', '2025-09-07 07:01:14'),
@@ -177,7 +174,11 @@ INSERT INTO `tapahtumat` (`id`, `joukkue_id`, `tyyppi`, `paikka`, `aika`, `kuvau
 	(23, 4, 'harjoitus', 'Uimaranta', '2025-09-12 20:26:00', 'Menemme pelaamaan Biitsiä', '2025-09-09 15:23:38'),
 	(24, 4, 'kokous', 'Hirvimaja', '2025-09-26 13:37:00', 'Peijjaiset', '2025-09-15 10:37:44'),
 	(25, 4, 'harjoitus', 'testi data', '2025-09-15 15:35:00', NULL, '2025-09-15 12:35:14'),
-	(26, 11, 'harjoitus', 'testi data', '2025-09-15 15:44:00', NULL, '2025-09-15 12:35:55');
+	(26, 11, 'harjoitus', 'testi data', '2025-09-15 15:44:00', NULL, '2025-09-15 12:35:55'),
+	(37, 4, 'peli', 'Hurtat', '2025-09-13 08:28:00', 'Harjoitusottelu', '2025-09-16 05:28:22'),
+	(39, 4, 'peli', 'Valkeala', '2025-10-24 08:34:00', NULL, '2025-09-16 05:34:39'),
+	(42, 4, 'harjoitus', 'Outokumpu', '2025-09-20 08:58:00', NULL, '2025-09-16 05:58:29'),
+	(43, 4, 'harjoitus', 'ttest', '2025-09-15 08:58:00', NULL, '2025-09-16 05:58:53');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

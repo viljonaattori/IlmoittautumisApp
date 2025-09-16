@@ -26,7 +26,7 @@ const Tyypit = [
 export default function TapahtumaForm({ onCreated }) {
   const [tyyppi, setTyyppi] = useState("harjoitus");
   const [paikka, setPaikka] = useState("");
-  const [aika, setAika] = useState(""); // yyyy-MM-ddThh:mm (datetime-local)
+  const [aika, setAika] = useState(""); // yyyy-MM-ddThh:mm
   const [kuvaus, setKuvaus] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
@@ -44,6 +44,12 @@ export default function TapahtumaForm({ onCreated }) {
     e.preventDefault();
     setError(null);
     setSuccess(null);
+
+    const dt = new Date(aika);
+    if (dt < new Date()) {
+      setError("Aika ei ole kelvollinen.");
+      return;
+    }
 
     // Perusvalidoinnit
     if (!tyyppi || !paikka || !aika) {
@@ -129,6 +135,9 @@ export default function TapahtumaForm({ onCreated }) {
               required
               InputLabelProps={{ shrink: true }}
               fullWidth
+              inputProps={{
+                min: new Date().toISOString().slice(0, 16), // estetää tapahtuman luonti menneeseen aikaan
+              }}
             />
 
             <TextField

@@ -10,6 +10,7 @@ Päivä:      Aika: 1h    Mitä tein: Loin rekisteröitymisen toiminnalisuuden f
 
 Päivä: 1.9	Aika: 3h	Mitä tein: Rakensin kirjautumisen ja etusivun, tällä hetkellä kirjautumien ilman tokenia.
 Päivä:      Aika: 3h    Mitä tein: MariaDB opiskelua, datan muuntaminen sopivaan muotoon. 
+Päivä:      Aika: 5h    Mitä tein: Käyttäjäntunnistus ja datan käyttö.
 
 Päivä: 2.9	Aika: 1h	Mitä tein: ProtectedRoute korjattu ja kirjautuneen käyttäjän joukkue lisätty appbariin. 
 Päivä: 3.9	Aika: 2h	Mitä tein: backendiin kutsu jäsenten ja ylläpitäjän hakuun. Fronttiin: jäsenpaneeli etusivulle.
@@ -33,5 +34,7 @@ Päivä: 15.9 Aika: 5h     Mitä tein: Kokeilin laittaa sovellusta pyörimään 
 Päivä:      Aika: 2h     Mitä tein: Lisäsin uuden joukkueen luomisen ja integroin sen rekisteröinnin yhteyteen, jotta käyttäjä voi valita meneekö jo olemassa olevaan joukkueeseen. Pilkoin myös register api endpointtia pienemmiksi paloiksi.
 Päivä:      Aika: 2h     Mitä tein: Toteutin joukkueen poiston, mutta se ei vielä poista käyttäjiä joukkueesta.
 
-Päivä: 26.9 Aika: 1h     Mitä tein: Korjasin tapahtuman lisäyksen päivityksen. 
+Päivä: 16.9 Aika: 1h     Mitä tein: Korjasin tapahtuman lisäyksen päivityksen. 
 Päivä       Aika: 3h     Mitä tein: Lisäsin yksittäisen pelaajan poiston adminille mahdolliseksi. lisäsin logon etusivulle.
+Päivä       Aika: 1h     Mitä tein: Lisäsin ominaisuuden, että tapahtumaa ei voi luoda menneeseen aikaan.(fronttiin ja backkiin)
+yht. 50h

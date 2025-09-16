@@ -30,6 +30,7 @@ export default function TapahtumaForm({ onCreated }) {
   const [kuvaus, setKuvaus] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
   const reset = () => {
     setTyyppi("harjoitus");
@@ -42,6 +43,7 @@ export default function TapahtumaForm({ onCreated }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
+    setSuccess(null);
 
     // Perusvalidoinnit
     if (!tyyppi || !paikka || !aika) {
@@ -53,7 +55,7 @@ export default function TapahtumaForm({ onCreated }) {
       setSaving(true);
       const token = localStorage.getItem("token");
 
-      // Muutetaan datetime-local -> MySQL DATETIME (YYYY-MM-DD HH:mm:ss)
+      // muunnetaan aika sopivaksi sql muotoon
       const dt = new Date(aika);
       const pad = (n) => String(n).padStart(2, "0");
       const mysqlDateTime = `${dt.getFullYear()}-${pad(
@@ -77,7 +79,8 @@ export default function TapahtumaForm({ onCreated }) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Tallennus epäonnistui");
 
-      // Ilmoita parentille ja nollaa lomakkeen
+      setSuccess("Tapahtuma luotu onnistuneesti!");
+      reset();
       onCreated?.(data);
       reset();
     } catch (e2) {
@@ -136,6 +139,8 @@ export default function TapahtumaForm({ onCreated }) {
               minRows={2}
               fullWidth
             />
+            {error && <Alert severity="error">{error}</Alert>}
+            {success && <Alert severity="success">{success}</Alert>}
           </Stack>
         </CardContent>
 

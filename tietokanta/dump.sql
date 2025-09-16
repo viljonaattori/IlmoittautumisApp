@@ -43,7 +43,10 @@ INSERT INTO `invite` (`id`, `team_id`, `token`, `created_at`, `expires_at`, `use
 	(12, 4, '8f850e85-ae7d-4ae7-8916-687de102cedb', '2025-09-12 11:30:33', '2025-09-19 11:30:33', 0),
 	(13, 4, 'a53b4f20-3149-4ec4-95c8-73c97a5deba1', '2025-09-12 11:31:06', '2025-09-19 11:31:06', 0),
 	(14, 4, '90e931aa-c080-44ac-991d-6ed2d116a5fe', '2025-09-14 04:53:43', '2025-09-21 04:53:43', 0),
-	(15, 4, 'b1c98458-568d-494a-8dda-15cc640dc86d', '2025-09-14 05:24:28', '2025-09-21 05:24:28', 1);
+	(15, 4, 'b1c98458-568d-494a-8dda-15cc640dc86d', '2025-09-14 05:24:28', '2025-09-21 05:24:28', 1),
+	(16, 11, 'aa003735-a7c6-4ae1-a5ee-3540a564d56d', '2025-09-15 12:34:05', '2025-09-22 12:34:05', 0),
+	(17, 11, 'e91c2e93-222a-4258-95b4-4a0f20babc11', '2025-09-15 12:36:34', '2025-09-22 12:36:34', 0),
+	(18, 11, 'c83042be-4687-4834-a398-7f7f80df3afb', '2025-09-15 12:44:20', '2025-09-22 12:44:20', 1);
 
 -- Dumping structure for taulu ilmoittautumisapp.joukkueet
 CREATE TABLE IF NOT EXISTS `joukkueet` (
@@ -63,7 +66,9 @@ INSERT INTO `joukkueet` (`id`, `nimi`, `ylläpitäjä_id`, `luotu`) VALUES
 	(3, 'Salibandy Naiset', 9, '2025-08-31 17:45:17'),
 	(4, 'PoU edustus', 15, '2025-08-31 17:46:32'),
 	(5, 'Viu', 9, '2025-08-31 17:46:32'),
-	(6, 'Kataja U12', 9, '2025-08-31 17:46:32');
+	(6, 'Kataja U12', 9, '2025-08-31 17:46:32'),
+	(11, 'Vaivion Tarmo', 23, '2025-09-15 12:33:41'),
+	(12, 'HC RIIGA', 25, '2025-09-15 12:54:31');
 
 -- Dumping structure for taulu ilmoittautumisapp.käyttäjät
 CREATE TABLE IF NOT EXISTS `käyttäjät` (
@@ -91,7 +96,13 @@ INSERT INTO `käyttäjät` (`id`, `email`, `salasana_hash`, `nimi`, `joukkue_id`
 	(18, 'testi12@testi.com', '$2b$10$4oKC5a7P9vLup.7bnM94OerW9aaX2mMsro2UCpygoC4datFnp/bUq', 'Viljami Perttula', 4, '2025-09-09 15:25:00'),
 	(19, 'Santtu.XÅÅÅL@hotmail.com', '$2b$10$cAZJulGtzRzugv0CYBFtAOSJT5M24o8BOsNFnuh1kjvJ90uJ2xB0u', 'Santtu Nykänen', 4, '2025-09-12 11:49:29'),
 	(20, 'Jare.villegalle@gmail.com', '$2b$10$njIxj4oqg06xwfbrEVXdDuTVGEIYUgMmEDmeNkUW.HR9cUbHvHgZi', 'JVG', 4, '2025-09-14 04:55:07'),
-	(21, 'Rene.kuikka@gmail.com', '$2b$10$iwHcNCYLfgZW7TqUE52TReUIhOZu56ETIEl1K4zAe8S6i4nlCzsAC', 'Rene Kuikka', 4, '2025-09-14 05:25:06');
+	(21, 'Rene.kuikka@gmail.com', '$2b$10$iwHcNCYLfgZW7TqUE52TReUIhOZu56ETIEl1K4zAe8S6i4nlCzsAC', 'Rene Kuikka', 4, '2025-09-14 05:25:06'),
+	(22, 'joonasmustimustonen@gmail.com', '$2b$10$nWqx3wSsrTwlHujZPNqMbOjeLtDjjhsKxtK.61eqTxP9cnrKrXUOW', 'Jones mustonen', 2, '2025-09-15 12:23:17'),
+	(23, 'joonas.mustonen@gmail.com', '$2b$10$ooGTIS.c9jGsB9OIa7fnQeXkG5vqPO25hVQF5EjVGbRG4RqXsl6My', 'Joonas Mustonen', 11, '2025-09-15 12:33:41'),
+	(24, 'Jouni.auvinen@gmail.com', '$2b$10$CPfjqrHdPYscry5/kcjjkul6KPrMplYT8z/e3YElseguC3PSkJqzS', 'Jouni Auvinen', 11, '2025-09-15 12:44:44'),
+	(25, 'rikkakihveli@hotmail.com', '$2b$10$MevVBsyJPjTAVQoD43oBBONTB361uAu2XgLKKVP/2BK6g9Pzyq3zS', 'rikka kihveli', 12, '2025-09-15 12:54:31'),
+	(26, 'tarja.halonen@hotmail.com', '$2b$10$11ziK40WnlN87pO05LIsH.HSRkGFYe5cI4uceFyj2fVC/j4qIbIK6', 'Tarja Halonen', 13, '2025-09-15 12:58:04'),
+	(27, 'otto.laakkonen@gmail.com', '$2b$10$Z6K0tNmNJvIZNP0vzro3EeAiRTfGF6tkMiw/1c7fmsEDRotm.PCIO', 'Otto Laakkonen', 13, '2025-09-15 13:07:44');
 
 -- Dumping structure for taulu ilmoittautumisapp.osallistumiset
 CREATE TABLE IF NOT EXISTS `osallistumiset` (
@@ -124,7 +135,8 @@ INSERT INTO `osallistumiset` (`id`, `tapahtuma_id`, `kayttaja_id`, `status`, `pa
 	(53, 16, 20, 'en_osallistu', '2025-09-14 04:55:40'),
 	(54, 12, 21, 'en_osallistu', '2025-09-14 05:25:24'),
 	(55, 6, 21, 'en_osallistu', '2025-09-14 05:25:25'),
-	(56, 16, 21, 'en_osallistu', '2025-09-14 05:25:26');
+	(56, 16, 21, 'en_osallistu', '2025-09-14 05:25:26'),
+	(57, 24, 15, 'osallistun', '2025-09-15 10:37:55');
 
 -- Dumping structure for taulu ilmoittautumisapp.tapahtumat
 CREATE TABLE IF NOT EXISTS `tapahtumat` (
@@ -162,7 +174,10 @@ INSERT INTO `tapahtumat` (`id`, `joukkue_id`, `tyyppi`, `paikka`, `aika`, `kuvau
 	(20, 4, 'kokous', 'Metsä', '2025-08-23 17:30:00', 'Tapaamme metsässä ja etsimme sieniä', '2025-09-09 15:20:07'),
 	(21, 4, 'harjoitus', 'Metsä', '2025-09-10 17:30:00', 'Tapaamme metsässä ja etsimme sieniä', '2025-09-09 15:21:07'),
 	(22, 4, 'harjoitus', 'Metsä', '2025-09-10 17:30:00', 'Tapaamme metsässä ja etsimme sieniä', '2025-09-09 15:22:51'),
-	(23, 4, 'harjoitus', 'Uimaranta', '2025-09-12 20:26:00', 'Menemme pelaamaan Biitsiä', '2025-09-09 15:23:38');
+	(23, 4, 'harjoitus', 'Uimaranta', '2025-09-12 20:26:00', 'Menemme pelaamaan Biitsiä', '2025-09-09 15:23:38'),
+	(24, 4, 'kokous', 'Hirvimaja', '2025-09-26 13:37:00', 'Peijjaiset', '2025-09-15 10:37:44'),
+	(25, 4, 'harjoitus', 'testi data', '2025-09-15 15:35:00', NULL, '2025-09-15 12:35:14'),
+	(26, 11, 'harjoitus', 'testi data', '2025-09-15 15:44:00', NULL, '2025-09-15 12:35:55');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

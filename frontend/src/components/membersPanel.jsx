@@ -1,10 +1,13 @@
 import { Paper, Stack, Chip, Typography, Box, Button } from "@mui/material";
 import { useState } from "react";
+
 export default function MembersPanel({
   members = [],
   loading,
   error,
   onReload,
+  isAdmin,
+  onDeleteMember,
 }) {
   const [copied, setCopied] = useState(false);
 
@@ -59,7 +62,6 @@ export default function MembersPanel({
           {error}
         </Typography>
       )}
-
       {!loading && !error && members.length === 0 && (
         <Typography variant="body2">Ei jäseniä.</Typography>
       )}
@@ -68,16 +70,18 @@ export default function MembersPanel({
         {members.map((m) => (
           <Chip
             key={m.id}
-            label={m.nimi}
+            label={m.is_admin ? `${m.nimi} (admin)` : m.nimi}
             variant={m.is_admin ? "filled" : "outlined"}
             color={m.is_admin ? "secondary" : "default"}
             title={m.email}
+            onDelete={
+              isAdmin && !m.is_admin ? () => onDeleteMember(m.id) : undefined
+            }
             sx={{ mb: 1 }}
           />
         ))}
       </Stack>
 
-      {/* Vihreä painike liittymislinkin kopiointiin */}
       <Box sx={{ mt: 2 }}>
         <Button
           fullWidth

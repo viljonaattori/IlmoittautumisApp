@@ -11,7 +11,10 @@ import {
 import RefreshIcon from "@mui/icons-material/Refresh";
 import TapahtumaCard from "./TapahtumaCard";
 
-export default function TulevatTapahtumat({ canDelete = false }) {
+export default function TulevatTapahtumat({
+  canDelete = false,
+  refreshSignal,
+}) {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(false);
   const [savingId, setSavingId] = useState(null);
@@ -37,7 +40,7 @@ export default function TulevatTapahtumat({ canDelete = false }) {
 
   useEffect(() => {
     fetchEvents();
-  }, []);
+  }, [refreshSignal]);
 
   const handleRespond = async (id, status) => {
     const token = localStorage.getItem("token");

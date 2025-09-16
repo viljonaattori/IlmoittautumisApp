@@ -41,6 +41,27 @@ export default function Etusivu() {
     }
   };
 
+  const deleteMember = async (id) => {
+    if (!window.confirm("Poistetaanko tämä jäsen?")) return;
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(
+        `http://localhost:3001/api/joukkueet/members/${id}`,
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Poisto epäonnistui");
+      }
+      fetchMembers(); // päivitetään jäsenlista
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
   const isAdmin = user && members.some((m) => m.id === user.id && m.is_admin);
 
   const handleCreated = () => setRefreshTick((t) => t + 1);
@@ -72,7 +93,10 @@ export default function Etusivu() {
             loading={memLoading}
             error={memError}
             onReload={fetchMembers}
+            isAdmin={isAdmin}
+            onDeleteMember={deleteMember}
           />
+
           <Box sx={{ mt: 3, maxHeight: 300, overflowY: "auto" }}>
             <MenneetTapahtumat />
           </Box>

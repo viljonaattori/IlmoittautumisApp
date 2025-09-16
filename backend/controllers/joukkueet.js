@@ -74,4 +74,34 @@ router.delete(
   }
 );
 
+// yksittäisen pelaajan poisto
+router.delete(
+  "/members/:id",
+  authRequired,
+  requireTeamAdmin,
+  async (req, res, next) => {
+    try {
+      const memberId = Number(req.params.id);
+
+      // varmistetaan että pelaaja kuuluu samaan joukkueeseen
+      const rows = await query(
+        "SELECT id FROM `käyttäjät` WHERE id = ? AND joukkue_id = ?",
+        [memberId, req.user.joukkue_id]
+      );
+
+      if (rows.length === 0) {
+        return res
+          .status(400)
+          .json({ error: "Jäsentä ei löydy tästä joukkueesta" });
+      }
+
+      await query("DELETE FROM `käyttäjät` WHERE id = ?", [memberId]);
+
+      res.status(204).end();
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
 module.exports = router;

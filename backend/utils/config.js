@@ -1,5 +1,6 @@
-require("dotenv").config();
-
+// utils/config.js
+const envFile = process.env.NODE_ENV === "test" ? ".env.test" : ".env";
+require("dotenv").config({ path: envFile });
 const PORT = process.env.PORT || 3001;
 
 const DB = {

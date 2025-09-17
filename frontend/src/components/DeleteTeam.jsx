@@ -5,7 +5,12 @@ function DeleteTeam({ teamId, token, onDeleted }) {
   const [loading, setLoading] = useState(false);
 
   const handleDelete = async () => {
-    if (!window.confirm("Haluatko varmasti poistaa joukkueen?")) return;
+    if (
+      !window.confirm(
+        "Haluatko varmasti poistaa joukkueen? Kaikki käyttäjät poistetaan samalla"
+      )
+    )
+      return;
 
     setLoading(true);
     try {

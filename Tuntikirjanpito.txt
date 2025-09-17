@@ -37,4 +37,5 @@ Päivä:      Aika: 2h     Mitä tein: Toteutin joukkueen poiston, mutta se ei v
 Päivä: 16.9 Aika: 1h     Mitä tein: Korjasin tapahtuman lisäyksen päivityksen. 
 Päivä       Aika: 3h     Mitä tein: Lisäsin yksittäisen pelaajan poiston adminille mahdolliseksi. lisäsin logon etusivulle.
 Päivä       Aika: 1h     Mitä tein: Lisäsin ominaisuuden, että tapahtumaa ei voi luoda menneeseen aikaan.(fronttiin ja backkiin)
-yht. 50h
+
+Päivä  17.9 Aika: 4h     Mitä tein: Integraatio testauksia auth.js tiedostoon ja testitietokannan teko.

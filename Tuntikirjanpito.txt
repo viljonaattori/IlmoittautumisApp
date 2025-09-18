@@ -41,3 +41,4 @@ Päivä       Aika: 1h     Mitä tein: Lisäsin ominaisuuden, että tapahtumaa e
 Päivä  17.9 Aika: 5h     Mitä tein: Integraatio testauksia auth.js ja invite.js tiedostoon ja testitietokannan teko.
 
 Päivä  18.9 Aika: 2h     Mitä tein: Joukkueet.test.js sivulle integraatio testejä.
+Päivä       Aika: 3h     Mitä tein: tapahtumat testit ja lisää selvittelyä datetime muunnoksista tietokannan suuntaan.

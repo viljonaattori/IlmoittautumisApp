@@ -38,4 +38,6 @@ Päivä: 16.9 Aika: 1h     Mitä tein: Korjasin tapahtuman lisäyksen päivityks
 Päivä       Aika: 3h     Mitä tein: Lisäsin yksittäisen pelaajan poiston adminille mahdolliseksi. lisäsin logon etusivulle.
 Päivä       Aika: 1h     Mitä tein: Lisäsin ominaisuuden, että tapahtumaa ei voi luoda menneeseen aikaan.(fronttiin ja backkiin)
 
-Päivä  17.9 Aika: 4h     Mitä tein: Integraatio testauksia auth.js tiedostoon ja testitietokannan teko.
+Päivä  17.9 Aika: 5h     Mitä tein: Integraatio testauksia auth.js ja invite.js tiedostoon ja testitietokannan teko.
+
+Päivä  18.9 Aika: 2h     Mitä tein: Joukkueet.test.js sivulle integraatio testejä.

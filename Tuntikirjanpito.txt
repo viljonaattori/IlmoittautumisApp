@@ -46,4 +46,4 @@ Päivä       Aika: 3h     Mitä tein: tapahtumat testit ja lisää selvittelyä
 66h
 
 Päivä: 19.9 Aika: 4h    Mitä tein: Opiskelin githubin pipelinejä ja actions workflows 
-Päivä: 20.9 Aika: 4h    
+Päivä: 20.9 Aika: 4h    Mitä tein: Yritin saada tuota workflowta toimimaan mutta ei niin ei, ongelma on varmaan tietokantaan yhdiswtämisessä.

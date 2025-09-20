@@ -44,3 +44,6 @@ Päivä  18.9 Aika: 2h     Mitä tein: Joukkueet.test.js sivulle integraatio tes
 Päivä       Aika: 3h     Mitä tein: tapahtumat testit ja lisää selvittelyä datetime muunnoksista tietokannan suuntaan.
 
 66h
+
+Päivä: 19.9 Aika: 4h    Mitä tein: Opiskelin githubin pipelinejä ja actions workflows 
+Päivä: 20.9 Aika: 4h    

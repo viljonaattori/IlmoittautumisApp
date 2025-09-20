@@ -143,7 +143,7 @@ describe("Joukkueet API", () => {
   });
 
   // Varmistetaan että tavallinen jäsen ei voi poistaa joukkuetta
-  test("DELETE /api/joukkueet/:id palauttaa 403 jos käyttäjä ei ole admin", async () => {
+  test("DELETE /api/joukkueet/:id palauttaa 404 jos käyttäjä ei ole admin", async () => {
     const res = await request(app)
       .delete(`/api/joukkueet/${teamId}`)
       .set("Authorization", `Bearer ${memberToken}`);

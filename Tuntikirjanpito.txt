@@ -46,4 +46,8 @@ Päivä       Aika: 3h     Mitä tein: tapahtumat testit ja lisää selvittelyä
 66h
 
 Päivä: 19.9 Aika: 4h    Mitä tein: Opiskelin githubin pipelinejä ja actions workflows 
+
 Päivä: 20.9 Aika: 4h    Mitä tein: Yritin saada tuota workflowta toimimaan mutta ei niin ei, ongelma on varmaan tietokantaan yhdiswtämisessä.
+
+Päivä: 21.9 Aika: 4h    Mitä tein: Opeskelin evästeitä
+Päivä:      Aika: 2h    Mitä tein: Toteutin localstorage "evästeet", ilman hyväksymistä käyttäjästä ei tallenneta localstorageen mitään eli käyttäjä ei myöskään voi tehdä mitään kutsuja.

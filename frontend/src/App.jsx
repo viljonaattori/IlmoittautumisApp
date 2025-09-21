@@ -7,6 +7,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Etusivu from "./pages/Etusivu";
 import Layout from "./components/Layout";
 import Join from "./pages/Join";
+import CookieBanner from "./components/CookieBanner";
 
 function App() {
   const darkTheme = createTheme({
@@ -40,6 +41,7 @@ function App() {
           </Route>
         </Routes>
       </Router>
+      <CookieBanner />
     </ThemeProvider>
   );
 }

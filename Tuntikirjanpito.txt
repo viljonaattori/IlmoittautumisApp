@@ -53,3 +53,4 @@ Päivä: 21.9 Aika: 4h    Mitä tein: Opeskelin evästeitä
 Päivä:      Aika: 2h    Mitä tein: Toteutin localstorage "evästeet", ilman hyväksymistä käyttäjästä ei tallenneta localstorageen mitään eli käyttäjä ei myöskään voi tehdä mitään kutsuja.
 
 Päivä: 22.9 Aika: 2h    Mitä tein: Ylläpitäjälle tapahtumien muokkaus toiminnallisuus.
+Päivä:      Aika: 1h    Mitä tein: Korjauksia tuohon tapahtumien muokkaukseen. 

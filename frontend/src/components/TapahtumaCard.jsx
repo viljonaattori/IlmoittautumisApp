@@ -77,7 +77,6 @@ export default function TapahtumaCard({
   return (
     <Box key={e.id} sx={{ py: 1.25 }}>
       <Grid container spacing={2} alignItems="center">
-        {/* Tiedot + tilastot vasemmalle */}
         <Grid item xs={12} md={8}>
           <Stack spacing={0.5}>
             <Stack direction="row" spacing={1} alignItems="center">
@@ -160,18 +159,18 @@ export default function TapahtumaCard({
                 </span>
               </Tooltip>
             )}
-            <Tooltip title="Muokkaa tapahtumaa">
-              <span>
+            {onEditEvent && (
+              <Tooltip title="Muokkaa tapahtumaa">
                 <IconButton
                   aria-label="muokkaa"
                   color="primary"
-                  onClick={() => onEditEvent && onEditEvent(e.id)}
+                  onClick={() => onEditEvent(e.id)}
                   size="small"
                 >
                   <BuildIcon />
                 </IconButton>
-              </span>
-            </Tooltip>
+              </Tooltip>
+            )}
           </Stack>
         </Grid>
       </Grid>

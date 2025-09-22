@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Box, TextField, Button, Typography } from "@mui/material";
+import { Box, TextField, Button, Typography, MenuItem } from "@mui/material";
 
 export default function PaivitaTapahtuma() {
   const { tapahtumaId } = useParams();
@@ -12,6 +12,14 @@ export default function PaivitaTapahtuma() {
     aika: "",
     kuvaus: "",
   });
+
+  // Tapahtuman tyypit
+  const Tyypit = [
+    { value: "harjoitus", label: "Harjoitus" },
+    { value: "peli", label: "Peli" },
+    { value: "palaveri", label: "Palaveri" },
+    { value: "kokous", label: "Kokous" },
+  ];
 
   // Haetaan olemassa olevat tiedot
   useEffect(() => {
@@ -63,18 +71,43 @@ export default function PaivitaTapahtuma() {
     }
   };
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ p: 3 }}>
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      sx={{
+        p: 3,
+        mx: { xs: 2, sm: 5, md: "auto" }, // responsiiviset marginaalit
+        maxWidth: 600, // esim. max leveys
+      }}
+    >
+      <Button
+        sx={{ mb: 4 }}
+        variant="outlined"
+        color="secondary"
+        onClick={() => navigate("/etusivu")}
+      >
+        Takaisin etusivulle
+      </Button>
       <Typography variant="h5" sx={{ mb: 2 }}>
         Muokkaa tapahtumaa
       </Typography>
+
       <TextField
+        select
         label="Tyyppi"
         name="tyyppi"
         value={data.tyyppi}
         onChange={handleChange}
         fullWidth
         sx={{ mb: 2 }}
-      />
+      >
+        {Tyypit.map((opt) => (
+          <MenuItem key={opt.value} value={opt.value}>
+            {opt.label}
+          </MenuItem>
+        ))}
+      </TextField>
+
       <TextField
         label="Paikka"
         name="paikka"
@@ -86,10 +119,12 @@ export default function PaivitaTapahtuma() {
       <TextField
         label="Aika"
         name="aika"
+        type="datetime-local"
         value={data.aika}
         onChange={handleChange}
         fullWidth
         sx={{ mb: 2 }}
+        slotProps={{ inputLabel: { shrink: true } }}
       />
       <TextField
         label="Kuvaus"

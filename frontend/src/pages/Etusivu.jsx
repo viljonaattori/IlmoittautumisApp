@@ -50,9 +50,10 @@ export default function Etusivu() {
             <TulevatTapahtumat
               canDelete={isAdmin}
               refreshSignal={refreshTick}
-              onEditEvent={(tapahtumaId) =>
-                navigate(`/paivitaTapahtuma/${tapahtumaId}`)
-              }
+              {...(isAdmin && {
+                onEditEvent: (tapahtumaId) =>
+                  navigate(`/paivitaTapahtuma/${tapahtumaId}`),
+              })}
             />
           </Box>
         </Grid>

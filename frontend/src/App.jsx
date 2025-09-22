@@ -8,6 +8,7 @@ import Etusivu from "./pages/Etusivu";
 import Layout from "./components/Layout";
 import Join from "./pages/Join";
 import CookieBanner from "./components/CookieBanner";
+import PaivitaTapahtuma from "./pages/paivitaTapahtuma";
 
 function App() {
   const darkTheme = createTheme({
@@ -28,6 +29,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route
+            path="/paivitaTapahtuma/:tapahtumaId"
+            element={<PaivitaTapahtuma />}
+          />
           <Route path="/join/:token" element={<Join />} />
           <Route
             element={
@@ -37,7 +42,6 @@ function App() {
             }
           >
             <Route path="/etusivu" element={<Etusivu />} />
-            {/* Lisää myöhemmin esim. <Route path="/tapahtumat" element={<Tapahtumat />} /> */}
           </Route>
         </Routes>
       </Router>

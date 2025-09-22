@@ -14,6 +14,7 @@ import TapahtumaCard from "./TapahtumaCard";
 export default function TulevatTapahtumat({
   canDelete = false,
   refreshSignal,
+  onEditEvent,
 }) {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -105,6 +106,7 @@ export default function TulevatTapahtumat({
                 handleRespond={handleRespond}
                 canDelete={canDelete}
                 onDeleted={handleDeleted}
+                onEditEvent={onEditEvent}
               />
             ))}
           </Box>

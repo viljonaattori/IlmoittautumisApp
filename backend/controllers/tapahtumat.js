@@ -64,6 +64,20 @@ router.post("/:id/osallistuminen", authRequired, async (req, res, next) => {
   }
 });
 
+// Yksittäisen tapahtuman tiedot
+router.get("/:id", authRequired, async (req, res, next) => {
+  try {
+    const [row] = await query(
+      "SELECT id, tyyppi, paikka, aika, kuvaus FROM tapahtumat WHERE id = ?",
+      [req.params.id]
+    );
+    if (!row) return res.status(404).json({ error: "Tapahtumaa ei löytynyt" });
+    res.json(row);
+  } catch (err) {
+    next(err);
+  }
+});
+
 // Käyttäjän oma osallistuminen tapahtumaan
 router.get("/:id/osallistuminen", authRequired, async (req, res, next) => {
   try {
@@ -152,6 +166,52 @@ router.post("/", authRequired, requireTeamAdmin, async (req, res, next) => {
 
     res.status(201).json({
       id: Number(result.insertId),
+      joukkue_id: req.user.joukkue_id,
+      tyyppi,
+      paikka,
+      aika,
+      kuvaus,
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Tapahtuman muokkaus
+router.put("/:id", authRequired, requireTeamAdmin, async (req, res, next) => {
+  try {
+    const tapahtumaId = Number(req.params.id);
+    const { tyyppi, paikka, aika, kuvaus } = req.body;
+
+    if (!tyyppi || !paikka || !aika) {
+      return res.status(400).json({ error: "Pakollinen kenttä puuttuu" });
+    }
+
+    // Ei voi muokata menneeseen aikaan
+    const now = new Date();
+    const tapahtumaAika = new Date(aika);
+    if (tapahtumaAika < now) {
+      return res
+        .status(400)
+        .json({ error: "Tapahtuma aika ei ole kelvonninen" });
+    }
+
+    const result = await query(
+      `UPDATE tapahtumat 
+    SET tyyppi = ?, paikka = ?, aika = ?, kuvaus = ?
+    WHERE id = ? AND joukkue_id = ?`,
+      [tyyppi, paikka, aika, kuvaus || null, tapahtumaId, req.user.joukkue_id]
+    );
+
+    if (result.affectedRows === 0) {
+      return res
+        .status(404)
+        .json({ error: "Tapahtumaa ei löydy tältä joukkueelta" });
+    }
+
+    res.json({
+      ok: true,
+      id: tapahtumaId,
       joukkue_id: req.user.joukkue_id,
       tyyppi,
       paikka,

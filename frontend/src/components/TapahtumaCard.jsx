@@ -15,6 +15,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { useState } from "react";
 import IconButton from "@mui/material/IconButton";
+import BuildIcon from "@mui/icons-material/Build";
 
 // Värit eri tapahtumille
 const typeColor = (t) => {
@@ -50,6 +51,7 @@ export default function TapahtumaCard({
   handleRespond,
   canDelete = false,
   onDeleted,
+  onEditEvent,
 }) {
   const [deleting, setDeleting] = useState(false);
 
@@ -158,6 +160,18 @@ export default function TapahtumaCard({
                 </span>
               </Tooltip>
             )}
+            <Tooltip title="Muokkaa tapahtumaa">
+              <span>
+                <IconButton
+                  aria-label="muokkaa"
+                  color="primary"
+                  onClick={() => onEditEvent && onEditEvent(e.id)}
+                  size="small"
+                >
+                  <BuildIcon />
+                </IconButton>
+              </span>
+            </Tooltip>
           </Stack>
         </Grid>
       </Grid>

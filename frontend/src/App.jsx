@@ -10,6 +10,7 @@ import Join from "./pages/Join";
 import CookieBanner from "./components/CookieBanner";
 import PaivitaTapahtuma from "./pages/paivitaTapahtuma";
 import MuokkaaJoukkuetta from "./pages/MuokkaaJoukkuetta";
+import Asetukset from "./pages/Asetukset";
 
 function App() {
   const darkTheme = createTheme({
@@ -44,6 +45,7 @@ function App() {
           >
             <Route path="/etusivu" element={<Etusivu />} />
             <Route path="/muokkaaJoukkuetta" element={<MuokkaaJoukkuetta />} />
+            <Route path="/asetukset" element={<Asetukset />} />
           </Route>
         </Routes>
       </Router>

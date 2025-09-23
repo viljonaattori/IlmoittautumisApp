@@ -12,6 +12,7 @@ const authRouter = require("./controllers/auth");
 const joukkueetRouter = require("./controllers/joukkueet");
 const tapahtumatRouter = require("./controllers/tapahtumat");
 const inviteRoutes = require("./controllers/invite");
+const userRoutes = require("./controllers/users");
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/joukkueet", joukkueetRouter);
 app.use("/api/tapahtumat", tapahtumatRouter);
 app.use("/api/invite", inviteRoutes);
+app.use("/api/users", userRoutes);
 
 app.get("/", (_req, res) => res.send("API ok"));
 

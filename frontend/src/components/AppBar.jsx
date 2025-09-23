@@ -24,31 +24,53 @@ import logo from "/Images/logo.png";
 
 const drawerWidth = 240;
 
-// Jokaisella nav-kohdalla on oma label ja path
+// navItems: label + polku + adminOnly jos vain ylläpitäjille
 const navItems = [
   { label: "Etusivu", path: "/etusivu" },
-  { label: "Muokkaa joukkuetta", path: "/muokkaaJoukkuetta" },
-  { label: "Tapahtumat", path: "/tapahtumat" },
+  { label: "Muokkaa joukkuetta", path: "/muokkaaJoukkuetta", adminOnly: true },
+  { label: "Asetukset", path: "/asetukset" },
 ];
 
 function DrawerAppBar({ window, joukkueNimi, onLogout }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [user, setUser] = React.useState(null);
+  const [members, setMembers] = React.useState([]);
   const navigate = useNavigate();
 
-  const handleDrawerToggle = () => {
-    setMobileOpen((prev) => !prev);
-  };
+  // Haetaan kirjautunut käyttäjä ja joukkueen jäsenet
+  React.useEffect(() => {
+    const u = localStorage.getItem("user");
+    if (u) setUser(JSON.parse(u));
+
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetch("http://localhost:3001/api/joukkueet/members", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then((res) => res.json())
+        .then((data) => setMembers(data.members || []))
+        .catch((err) => console.error("members fetch error", err));
+    }
+  }, []);
+
+  // Sama admin-logiikka kuin muilla sivuilla
+  const isAdmin = user && members.some((m) => m.id === user.id && m.is_admin);
+
+  const handleDrawerToggle = () => setMobileOpen((prev) => !prev);
 
   const handleNavigate = (path) => {
     navigate(path);
     setMobileOpen(false); // suljetaan drawer mobiilissa
   };
 
+  // Näytetään vain ne nav-kohteet, jotka sallitaan (adminOnly -> vain ylläpitäjälle)
+  const visibleNavItems = navItems.filter((item) => !item.adminOnly || isAdmin);
+
   const drawer = (
     <Box sx={{ textAlign: "center" }}>
       <Divider />
       <List>
-        {navItems.map((item) => (
+        {visibleNavItems.map((item) => (
           <ListItem key={item.path} disablePadding>
             <ListItemButton
               sx={{ textAlign: "left" }}
@@ -118,9 +140,9 @@ function DrawerAppBar({ window, joukkueNimi, onLogout }) {
             <Box component="img" src={logo} alt="Logo" sx={{ height: 32 }} />
           </Box>
 
-          {/* Desktopin nav-napit */}
+          {/* Desktopin nav-napit (suodatetut) */}
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {navItems.map((item) => (
+            {visibleNavItems.map((item) => (
               <Button
                 key={item.path}
                 sx={{ color: "#fff" }}

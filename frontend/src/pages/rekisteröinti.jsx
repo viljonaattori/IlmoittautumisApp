@@ -26,6 +26,7 @@ export default function Register() {
   const [success, setSuccess] = useState(null);
   const [mode, setMode] = useState("join");
   const [newTeamName, setNewTeamName] = useState("");
+  const [newTeamDescription, setNewTeamDescription] = useState("");
 
   const navigate = useNavigate();
 
@@ -55,6 +56,7 @@ export default function Register() {
         mode,
         joukkue_id: mode === "join" ? joukkueId : null,
         new_team_name: mode === "create" ? newTeamName : null,
+        new_team_kuvaus: mode === "create" ? newTeamDescription : null,
       };
 
       const res = await fetch("http://localhost:3001/api/auth/register", {
@@ -71,7 +73,7 @@ export default function Register() {
       }
 
       // Onnistuminen käyttäjälle ja consoliin
-      setSuccess("Käyttäjä luotu onnistuneesti!");
+      setSuccess("Luonti onnistui!");
       console.log("REGISTER SUCCESS:", data);
 
       // Token local storageen
@@ -171,13 +173,25 @@ export default function Register() {
 
           {/* Näytetään uuden joukkueen nimi jos mode=create */}
           {mode === "create" && (
-            <TextField
-              label="Uuden joukkueen nimi"
-              fullWidth
-              margin="normal"
-              value={newTeamName}
-              onChange={(e) => setNewTeamName(e.target.value)}
-            />
+            <>
+              <TextField
+                label="Uuden joukkueen nimi"
+                fullWidth
+                margin="normal"
+                value={newTeamName}
+                onChange={(e) => setNewTeamName(e.target.value)}
+              />
+
+              <TextField
+                label="Uuden joukkueen kuvaus"
+                fullWidth
+                margin="normal"
+                multiline // sallii useamman rivin
+                minRows={2} // vähintään kaksi riviä korkeutta
+                value={newTeamDescription}
+                onChange={(e) => setNewTeamDescription(e.target.value)}
+              />
+            </>
           )}
 
           {error && (

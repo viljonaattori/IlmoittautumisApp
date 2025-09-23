@@ -15,10 +15,18 @@ const {
   createJwt,
 } = require("./authFunctions");
 
-// POST /api/auth/register
+// Rekisteröinti
 router.post("/register", async (req, res, next) => {
   try {
-    const { email, password, nimi, joukkue_id, new_team_name, mode } = req.body;
+    const {
+      email,
+      password,
+      nimi,
+      joukkue_id,
+      new_team_name,
+      new_team_kuvaus,
+      mode,
+    } = req.body;
     const actualMode = mode || "join";
 
     await validateUserInput({ email, password, nimi });
@@ -32,7 +40,12 @@ router.post("/register", async (req, res, next) => {
 
     let teamId = joukkue_id;
     if (actualMode === "create") {
-      teamId = await createTeamIfNeeded(actualMode, new_team_name);
+      // HUOM! createTeamIfNeeded täytyy päivittää ottamaan kuvaus mukaan
+      teamId = await createTeamIfNeeded(
+        actualMode,
+        new_team_name,
+        new_team_kuvaus
+      );
     }
 
     const userId = await createUser({ email, password, nimi, teamId });
@@ -50,7 +63,7 @@ router.post("/register", async (req, res, next) => {
   }
 });
 
-// POST /api/auth/login
+// Kirjautuminen
 router.post("/login", async (req, res, next) => {
   try {
     const { email, password } = req.body;

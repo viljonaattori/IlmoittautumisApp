@@ -54,3 +54,5 @@ Päivä:      Aika: 2h    Mitä tein: Toteutin localstorage "evästeet", ilman h
 
 Päivä: 22.9 Aika: 2h    Mitä tein: Ylläpitäjälle tapahtumien muokkaus toiminnallisuus.
 Päivä:      Aika: 1h    Mitä tein: Korjauksia tuohon tapahtumien muokkaukseen. 
+
+Päivä: 23.9 Aika: 1h    Mitä tein: Lisäsin joukkueelle kuvauksen rekisteröintiin. 

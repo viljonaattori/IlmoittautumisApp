@@ -32,14 +32,17 @@ async function ensureTeamExists(id) {
   }
 }
 
-async function createTeamIfNeeded(mode, newName) {
+async function createTeamIfNeeded(mode, newName, kuvaus) {
   if (mode === "create") {
     if (!newName)
       throw { status: 400, message: "Uuden joukkueen nimi on annettava" };
+
+    // Lisätään kuvaus INSERTiin. Jos kuvausta ei anneta, se on NULL.
     const res = await query(
-      "INSERT INTO `joukkueet` (nimi, ylläpitäjä_id) VALUES (?, NULL)",
-      [newName]
+      "INSERT INTO `joukkueet` (nimi, kuvaus, ylläpitäjä_id) VALUES (?, ?, NULL)",
+      [newName, kuvaus || null]
     );
+
     return Number(res.insertId);
   }
   return null;

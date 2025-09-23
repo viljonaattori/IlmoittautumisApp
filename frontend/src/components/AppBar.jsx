@@ -20,7 +20,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import logo from "/Images/logo.png";
 
 const drawerWidth = 240;
-const navItems = ["Etusivu", "Muokkaa", "Tapahtumat"];
+const navItems = ["Etusivu", "Muokkaa joukkuetta", "Tapahtumat"];
 
 function DrawerAppBar({ window, joukkueNimi, onLogout }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);

@@ -1,5 +1,7 @@
 import * as React from "react";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -17,26 +19,42 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import LogoutIcon from "@mui/icons-material/Logout";
+
 import logo from "/Images/logo.png";
 
 const drawerWidth = 240;
-const navItems = ["Etusivu", "Muokkaa joukkuetta", "Tapahtumat"];
+
+// Jokaisella nav-kohdalla on oma label ja path
+const navItems = [
+  { label: "Etusivu", path: "/etusivu" },
+  { label: "Muokkaa joukkuetta", path: "/muokkaaJoukkuetta" },
+  { label: "Tapahtumat", path: "/tapahtumat" },
+];
 
 function DrawerAppBar({ window, joukkueNimi, onLogout }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const navigate = useNavigate();
 
   const handleDrawerToggle = () => {
-    setMobileOpen((prevState) => !prevState);
+    setMobileOpen((prev) => !prev);
+  };
+
+  const handleNavigate = (path) => {
+    navigate(path);
+    setMobileOpen(false); // suljetaan drawer mobiilissa
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+    <Box sx={{ textAlign: "center" }}>
       <Divider />
       <List>
         {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: "left" }}>
-              <ListItemText primary={item} />
+          <ListItem key={item.path} disablePadding>
+            <ListItemButton
+              sx={{ textAlign: "left" }}
+              onClick={() => handleNavigate(item.path)}
+            >
+              <ListItemText primary={item.label} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -73,20 +91,21 @@ function DrawerAppBar({ window, joukkueNimi, onLogout }) {
             <MenuIcon />
           </IconButton>
 
+          {/* Joukkueen nimi vasemmalle */}
           {joukkueNimi && (
             <Typography variant="body1" sx={{ ml: 1 }}>
               Joukkue: {joukkueNimi}
             </Typography>
           )}
 
-          {/* Keskitetty otsikko + logo desktopilla */}
+          {/* Keskitetty otsikko ja logo desktopilla */}
           <Box
             sx={{
               flexGrow: 1,
               display: { xs: "none", sm: "flex" },
               justifyContent: "center",
               alignItems: "center",
-              gap: 1, // pieni väli tekstin ja logon väliin
+              gap: 1,
             }}
           >
             <Typography
@@ -98,16 +117,21 @@ function DrawerAppBar({ window, joukkueNimi, onLogout }) {
             </Typography>
             <Box component="img" src={logo} alt="Logo" sx={{ height: 32 }} />
           </Box>
-          {/* Yläreunan nav-napit vain desktopilla */}
+
+          {/* Desktopin nav-napit */}
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
-              <Button key={item} sx={{ color: "#fff" }}>
-                {item}
+              <Button
+                key={item.path}
+                sx={{ color: "#fff" }}
+                onClick={() => handleNavigate(item.path)}
+              >
+                {item.label}
               </Button>
             ))}
           </Box>
 
-          {/* Logout icon aina oikealla desktop ja mobiili */}
+          {/* Logout ikoni oikealla */}
           <Tooltip title="Kirjaudu ulos">
             <IconButton
               color="inherit"
@@ -147,7 +171,7 @@ function DrawerAppBar({ window, joukkueNimi, onLogout }) {
 DrawerAppBar.propTypes = {
   window: PropTypes.func,
   joukkueNimi: PropTypes.string,
-  onLogout: PropTypes.func, // <-- lisätty
+  onLogout: PropTypes.func,
 };
 
 export default DrawerAppBar;

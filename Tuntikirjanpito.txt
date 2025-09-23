@@ -56,3 +56,4 @@ Päivä: 22.9 Aika: 2h    Mitä tein: Ylläpitäjälle tapahtumien muokkaus toim
 Päivä:      Aika: 1h    Mitä tein: Korjauksia tuohon tapahtumien muokkaukseen. 
 
 Päivä: 23.9 Aika: 1h    Mitä tein: Lisäsin joukkueelle kuvauksen rekisteröintiin. 
+Päivä: 23.9 Aika: 2h    Mitä tein: Muokkaa joukkuetta sivu ja endpointit kuvauksen, sekä joukkueen nimen päivitykseen.

@@ -104,4 +104,64 @@ router.delete(
   }
 );
 
+// Hakee joukkueen id, nimen ja kuvauksen ID perusteella
+router.get("/:id", authRequired, requireTeamAdmin, async (req, res, next) => {
+  try {
+    const joukkueId = Number(req.params.id);
+
+    const rows = await query(
+      "SELECT id, nimi, kuvaus FROM `joukkueet` WHERE id = ?",
+      [joukkueId]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "Joukkuetta ei löydy" });
+    }
+
+    // Nimi id ja kuvaus
+    const joukkue = rows[0];
+    res.json({
+      id: Number(joukkue.id),
+      nimi: joukkue.nimi,
+      kuvaus: joukkue.kuvaus || "",
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Joukkueen, nimen ja/tai kuvauksen muokkaus ID perusteella
+// Päivitä joukkueen nimi ja kuvaus
+router.put("/:id", authRequired, requireTeamAdmin, async (req, res, next) => {
+  try {
+    const joukkueId = Number(req.params.id);
+    const { nimi, kuvaus } = req.body;
+
+    // Varmistetaan että nimi on annettu
+    if (!nimi || nimi.trim() === "") {
+      return res.status(400).json({ error: "Joukkueen nimi on pakollinen" });
+    }
+
+    const result = await query(
+      `UPDATE \`joukkueet\`
+       SET nimi = ?, kuvaus = ?
+       WHERE id = ?`,
+      [nimi.trim(), kuvaus || null, joukkueId]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Joukkuetta ei löydy" });
+    }
+
+    res.json({
+      ok: true,
+      id: joukkueId,
+      nimi: nimi.trim(),
+      kuvaus: kuvaus || "",
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;

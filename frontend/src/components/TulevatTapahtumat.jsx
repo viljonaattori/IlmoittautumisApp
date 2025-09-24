@@ -65,6 +65,9 @@ export default function TulevatTapahtumat({
       );
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Tallennus epäonnistui");
+
+      // Haetaan päivittynyt data
+      await fetchEvents();
     } catch (e) {
       setEvents(prev);
       alert(e.message);
@@ -80,14 +83,7 @@ export default function TulevatTapahtumat({
 
   return (
     <Card variant="outlined" sx={{ borderRadius: 3, minWidth: 500 }}>
-      <CardHeader
-        title="Tulevat tapahtumat"
-        action={
-          <IconButton onClick={fetchEvents} aria-label="päivitä">
-            <RefreshIcon />
-          </IconButton>
-        }
-      />
+      <CardHeader title="Tulevat tapahtumat" />
       <CardContent>
         {loading && <CircularProgress size={24} />}
         {error && <Typography color="error">{error}</Typography>}

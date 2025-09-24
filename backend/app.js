@@ -13,6 +13,7 @@ const joukkueetRouter = require("./controllers/joukkueet");
 const tapahtumatRouter = require("./controllers/tapahtumat");
 const inviteRoutes = require("./controllers/invite");
 const userRoutes = require("./controllers/users");
+const path = require("path");
 
 const app = express();
 
@@ -21,6 +22,9 @@ app.use(express.json());
 app.use(requestLogger);
 app.use(tokenExtractor);
 app.use(userExtractor);
+
+// Staattiset kuvatiedostot
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Reitit
 app.use("/api/auth", authRouter);

@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const { query } = require("../db/pool");
 const { authRequired, requireTeamAdmin } = require("../utils/middleware");
+const multer = require("multer");
+const path = require("path");
 
 // GET /api/joukkueet
 router.get("/", async (_req, res, next) => {
@@ -163,5 +165,58 @@ router.put("/:id", authRequired, requireTeamAdmin, async (req, res, next) => {
     next(err);
   }
 });
+
+// Määritellään tallennuspaikka ja tiedostonimi
+const storage = multer.diskStorage({
+  destination: "uploads/teams/",
+  filename: (req, file, cb) => {
+    const uniqueName = Date.now() + path.extname(file.originalname);
+    cb(null, uniqueName);
+  },
+});
+
+const upload = multer({ storage });
+
+// Kuvan asettaminen
+router.put(
+  "/:id/kuva",
+  authRequired,
+  requireTeamAdmin,
+  upload.single("kuva"),
+  async (req, res, next) => {
+    try {
+      const joukkueId = Number(req.params.id);
+      if (!req.file)
+        return res.status(400).json({ error: "Kuva on pakollinen" });
+
+      await query("UPDATE `joukkueet` SET kuva = ? WHERE id = ?", [
+        `/uploads/teams/${req.file.filename}`,
+        joukkueId,
+      ]);
+
+      res.json({ ok: true, path: `/uploads/teams/${req.file.filename}` });
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+// Kuvan poisto
+router.delete(
+  "/:id/kuva",
+  authRequired,
+  requireTeamAdmin,
+  async (req, res, next) => {
+    try {
+      const joukkueId = Number(req.params.id);
+      await query("UPDATE `joukkueet` SET kuva = NULL WHERE id = ?", [
+        joukkueId,
+      ]);
+      res.status(204).end();
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 
 module.exports = router;

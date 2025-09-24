@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -22,6 +22,62 @@ export default function Asetukset() {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [joukkueId, setJoukkueId] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState("");
+
+  // Haetaan joukkueen id kun sivu latautuu
+  useEffect(() => {
+    const fetchTeamId = async () => {
+      const res = await fetch("http://localhost:3001/api/joukkueet/members", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setJoukkueId(data.joukkue_id);
+      }
+    };
+    fetchTeamId();
+  }, [token]);
+
+  // Kuvan valinta
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedImage(file);
+      setPreviewUrl(URL.createObjectURL(file)); // näytetään esikatselu
+    }
+  };
+
+  // Kuvan lähetys palvelimelle
+  const handleUploadTeamImage = async () => {
+    if (!selectedImage || !joukkueId) {
+      alert("Valitse kuva ja varmista että joukkue on tunnistettu");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("kuva", selectedImage);
+
+    const res = await fetch(
+      `http://localhost:3001/api/joukkueet/${joukkueId}/kuva`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      }
+    );
+
+    if (res.ok) {
+      alert("Joukkueen kuva päivitetty!");
+      setSelectedImage(null);
+      setPreviewUrl("");
+    } else {
+      alert("Virhe kuvan tallennuksessa");
+    }
+  };
 
   // Nimen päivitys
   const handleUpdateName = async () => {
@@ -171,6 +227,34 @@ export default function Asetukset() {
       </Dialog>
 
       <Divider sx={{ my: 2 }} />
+
+      <Typography variant="h6">Joukkueen kuva</Typography>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mb: 3 }}>
+        {previewUrl && (
+          <Box
+            component="img"
+            src={previewUrl}
+            alt="Esikatselu"
+            sx={{ width: 200, borderRadius: 2 }}
+          />
+        )}
+        <Button variant="outlined" component="label">
+          Valitse kuva
+          <input
+            type="file"
+            accept="image/*"
+            hidden
+            onChange={handleImageChange}
+          />
+        </Button>
+        <Button
+          variant="contained"
+          onClick={handleUploadTeamImage}
+          disabled={!selectedImage}
+        >
+          Lataa kuva
+        </Button>
+      </Box>
 
       <Button variant="outlined" onClick={() => navigate("/etusivu")}>
         Takaisin etusivulle

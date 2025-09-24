@@ -59,4 +59,5 @@ Päivä:      Aika: 4h    Mitä tein: Tein asetukset sivun, jossa käyttäjä vo
 
 90h
 
-Päivä: 24.9 Aika:       Mitä tein: Poistin .github/workflows, en saanut toimimaan halutulla tavalla. t
+Päivä: 24.9 Aika:       Mitä tein: Poistin .github/workflows, en saanut toimimaan halutulla tavalla.
+Päivä: 24.9 Aika: 1h    Mitä tein: Muokkasin manuaalisen päivityksen pois osallistaja määristä ja se päivittyy nyt klikkauksesta.

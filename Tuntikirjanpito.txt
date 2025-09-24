@@ -59,4 +59,4 @@ Päivä:      Aika: 4h    Mitä tein: Tein asetukset sivun, jossa käyttäjä vo
 
 90h
 
-Päivä: 24.9 Aika:       Mitä tein: Poistin .github/workflows, en saanut toimimaan halutulla tavalla.
+Päivä: 24.9 Aika:       Mitä tein: Poistin .github/workflows, en saanut toimimaan halutulla tavalla. t

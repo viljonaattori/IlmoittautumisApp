@@ -58,3 +58,5 @@ Päivä:      Aika: 2h    Mitä tein: Muokkaa joukkuetta sivu ja endpointit kuva
 Päivä:      Aika: 4h    Mitä tein: Tein asetukset sivun, jossa käyttäjä voi muokata tietojaan tai vaihtaa salasanaa.
 
 90h
+
+Päivä: 24.9 Aika:       Mitä tein: Poistin .github/workflows, en saanut toimimaan halutulla tavalla.

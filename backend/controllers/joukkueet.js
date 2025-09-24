@@ -219,4 +219,25 @@ router.delete(
   }
 );
 
+// Kuva
+router.get("/:id/kuva", authRequired, async (req, res, next) => {
+  try {
+    const joukkueId = Number(req.params.id);
+
+    const rows = await query("SELECT kuva FROM `joukkueet` WHERE id = ?", [
+      joukkueId,
+    ]);
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "Joukkuetta ei löydy" });
+    }
+
+    res.json({
+      kuva: rows[0].kuva || null,
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;

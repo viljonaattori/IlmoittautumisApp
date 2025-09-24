@@ -1,4 +1,3 @@
-// src/pages/Etusivu.jsx
 import { useEffect, useState } from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import MembersPanel from "../components/membersPanel";
@@ -11,10 +10,10 @@ import useMembers from "../hooks/useMembers";
 
 export default function Etusivu() {
   const [user, setUser] = useState(null);
+  const [teamLogo, setTeamLogo] = useState(""); // ✅ joukkueen logo
   const [refreshTick, setRefreshTick] = useState(0);
   const navigate = useNavigate();
 
-  // kaikki jäsenlogiikka hoituu hookissa
   const {
     members,
     loading: memLoading,
@@ -28,6 +27,29 @@ export default function Etusivu() {
     if (u) setUser(JSON.parse(u));
   }, []);
 
+  // ✅ Hae joukkueen logo kun käyttäjä on saatu
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!user?.joukkue_id) return;
+
+    const fetchLogo = async () => {
+      const res = await fetch(
+        `http://localhost:3001/api/joukkueet/${user.joukkue_id}/kuva`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      if (res.ok) {
+        const data = await res.json();
+        if (data.kuva) {
+          setTeamLogo(`http://localhost:3001${data.kuva}`);
+        } else {
+          setTeamLogo(""); // ei kuvaa
+        }
+      }
+    };
+
+    fetchLogo();
+  }, [user]);
+
   const isAdmin = user && members.some((m) => m.id === user.id && m.is_admin);
 
   const handleCreated = () => setRefreshTick((t) => t + 1);
@@ -36,9 +58,24 @@ export default function Etusivu() {
     <Box sx={{ flexGrow: 1, p: 2 }}>
       <Grid container spacing={6} alignItems="flex-start">
         <Grid item xs>
-          <Typography variant="h4" sx={{ mb: 3 }}>
-            Tervetuloa {user?.nimi ?? "!"}
-          </Typography>
+          {/* Otsikko ja joukkueen logo */}
+          <Box sx={{ display: "flex", alignItems: "center", mb: 3, gap: 2 }}>
+            {teamLogo && (
+              <Box
+                component="img"
+                src={teamLogo}
+                alt="Joukkueen logo"
+                sx={{
+                  width: 60,
+                  height: 60,
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                  border: "2px solid #444",
+                }}
+              />
+            )}
+            <Typography variant="h4">Tervetuloa {user?.nimi ?? "!"}</Typography>
+          </Box>
 
           {isAdmin && (
             <Box sx={{ mb: 3 }}>

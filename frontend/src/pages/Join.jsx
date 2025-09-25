@@ -11,7 +11,7 @@ import {
 import emailValidator from "../utils/emailValidator";
 
 export default function Join() {
-  const { token } = useParams(); // Otetaan joukkueid parametreista
+  const { token } = useParams();
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);

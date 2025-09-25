@@ -10,7 +10,7 @@ import useMembers from "../hooks/useMembers";
 
 export default function Etusivu() {
   const [user, setUser] = useState(null);
-  const [teamLogo, setTeamLogo] = useState(""); // ✅ joukkueen logo
+  const [teamLogo, setTeamLogo] = useState("");
   const [refreshTick, setRefreshTick] = useState(0);
   const navigate = useNavigate();
 
@@ -27,7 +27,7 @@ export default function Etusivu() {
     if (u) setUser(JSON.parse(u));
   }, []);
 
-  // ✅ Hae joukkueen logo kun käyttäjä on saatu
+  // Haetaan joukkueen logo kun käyttäjä on saatu
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!user?.joukkue_id) return;

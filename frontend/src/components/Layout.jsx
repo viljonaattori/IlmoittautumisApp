@@ -1,7 +1,6 @@
-// src/components/Layout.jsx
 import { useEffect, useState } from "react";
 import { Box, Container } from "@mui/material";
-import AppBar from "./AppBar"; // <- sun DrawerAppBar
+import AppBar from "./AppBar";
 import Footer from "./Footer";
 import { Outlet, useNavigate } from "react-router-dom";
 
@@ -17,15 +16,13 @@ export default function Layout() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    navigate("/"); // takaisin login-sivulle
+    navigate("/");
   };
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      {/* VÄLITÄ propsit! */}
       <AppBar joukkueNimi={user?.joukkue_nimi} onLogout={handleLogout} />
 
-      {/* Jos haluat spacerin, pidä se vain TÄÄLLÄ (älä AppBar-komponentissa) */}
       <Box sx={(t) => ({ ...t.mixins.toolbar })} />
 
       <Container maxWidth="lg" sx={{ flex: 1, py: 3 }}>

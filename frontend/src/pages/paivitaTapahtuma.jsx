@@ -77,7 +77,7 @@ export default function PaivitaTapahtuma() {
       sx={{
         p: 3,
         mx: { xs: 2, sm: 5, md: "auto" }, // responsiiviset marginaalit
-        maxWidth: 600, // esim. max leveys
+        maxWidth: 600,
       }}
     >
       <Button

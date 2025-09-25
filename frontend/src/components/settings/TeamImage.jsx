@@ -91,9 +91,7 @@ export default function TeamImage({ token }) {
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mb: 3 }}>
         <Box
           component="img"
-          src={
-            previewUrl || "/no-image.png" // ✅ käytä paikallista placeholderia
-          }
+          src={previewUrl || "/no-image.png"}
           alt="Joukkueen kuva"
           sx={{ width: 200, borderRadius: 2, objectFit: "cover" }}
         />

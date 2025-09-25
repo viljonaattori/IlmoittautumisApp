@@ -40,7 +40,6 @@ router.post("/register", async (req, res, next) => {
 
     let teamId = joukkue_id;
     if (actualMode === "create") {
-      // HUOM! createTeamIfNeeded täytyy päivittää ottamaan kuvaus mukaan
       teamId = await createTeamIfNeeded(
         actualMode,
         new_team_name,

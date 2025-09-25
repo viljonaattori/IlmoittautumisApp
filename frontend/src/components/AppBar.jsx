@@ -24,7 +24,6 @@ import logo from "/Images/logo.png";
 
 const drawerWidth = 240;
 
-// navItems: label + polku + adminOnly jos vain ylläpitäjille
 const navItems = [
   { label: "Etusivu", path: "/etusivu" },
   { label: "Muokkaa joukkuetta", path: "/muokkaaJoukkuetta", adminOnly: true },
@@ -63,7 +62,7 @@ function DrawerAppBar({ window, joukkueNimi, onLogout }) {
     setMobileOpen(false); // suljetaan drawer mobiilissa
   };
 
-  // Näytetään vain ne nav-kohteet, jotka sallitaan (adminOnly -> vain ylläpitäjälle)
+  // Näytetään vain ne kohtaa jotka sallitaan
   const visibleNavItems = navItems.filter((item) => !item.adminOnly || isAdmin);
 
   const drawer = (
@@ -102,7 +101,7 @@ function DrawerAppBar({ window, joukkueNimi, onLogout }) {
       <CssBaseline />
       <AppBar component="nav" position="fixed">
         <Toolbar>
-          {/* Hampurilainen mobiilille */}
+          {/* hampurilainen mobiilille */}
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -140,7 +139,7 @@ function DrawerAppBar({ window, joukkueNimi, onLogout }) {
             <Box component="img" src={logo} alt="Logo" sx={{ height: 32 }} />
           </Box>
 
-          {/* Desktopin nav-napit (suodatetut) */}
+          {/* Desktopin nav-napit */}
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {visibleNavItems.map((item) => (
               <Button

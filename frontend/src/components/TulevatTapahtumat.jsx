@@ -6,9 +6,7 @@ import {
   Box,
   Typography,
   CircularProgress,
-  IconButton,
 } from "@mui/material";
-import RefreshIcon from "@mui/icons-material/Refresh";
 import TapahtumaCard from "./TapahtumaCard";
 
 export default function TulevatTapahtumat({

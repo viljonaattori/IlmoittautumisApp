@@ -10,7 +10,7 @@ router.get("/", async (_req, res, next) => {
     const rows = await query(
       "SELECT id, nimi FROM `joukkueet` ORDER BY nimi ASC"
     );
-    // varmuuden vuoksi käännetään id numeroksi
+    
     const data = rows.map((r) => ({ id: Number(r.id), nimi: r.nimi }));
     res.json(data);
   } catch (err) {

@@ -5,6 +5,9 @@ const { query } = require("../db/pool");
 const { JWT } = require("../utils/config");
 const { errorHandler } = require("../utils/middleware");
 const emailValidator = require("../utils/emailValidator");
+const { sendEmail } = require("../utils/sendEmail.js");
+const crypto = require("crypto");
+
 const {
   validateUserInput,
   ensureEmailUnique,
@@ -113,4 +116,82 @@ router.post("/login", async (req, res, next) => {
     next(err);
   }
 });
+
+// Luodaan linkki ja lähetetään se sähköpostiin
+router.post("/passwordReset", async (req, res, next) => {
+  try {
+    const { email } = req.body;
+
+    const [user] = await query("SELECT id FROM käyttäjät WHERE email = ?", [
+      email,
+    ]);
+
+    // Palautetaan sama vastaus, vaikka email ei löytyisi
+    if (!user) {
+      return res.status(200).json({
+        message:
+          "Jos sähköposti on olemassa, lähetetään linkki salasanan vaihtoon.",
+      });
+    }
+
+    const token = crypto.randomBytes(32).toString("hex");
+    const expires = new Date(Date.now() + 3600 * 1000); // 1 tunti voimassa
+
+    await query(
+      "INSERT INTO password_resets (user_id, token, expires_at) VALUES (?, ?, ?)",
+      [user.id, token, expires]
+    );
+
+    const resetLink = `https://yourfrontendurl/reset?token=${token}`;
+
+    // Lähetä sähköposti
+    await sendEmail(
+      email,
+      "Salasanan palautus",
+      `Avaa tämä linkki: ${resetLink}`
+    );
+
+    res.json({
+      message: "Jos sähköposti on olemassa, lähetetään linkki.",
+    });
+  } catch (err) {
+    next(err); // välitetään virhe Expressin virheenkäsittelijälle
+  }
+});
+
+// Salasanan vaihto
+router.post("/changePassword", async (req, res, next) => {
+  try {
+    const { token, newPassword } = req.body;
+
+    // Tarkista token ja sen voimassaolo
+    const [row] = await query(
+      "SELECT user_id FROM password_resets WHERE token = ? AND expires_at > NOW()",
+      [token]
+    );
+
+    if (!row) {
+      return res
+        .status(400)
+        .json({ error: "Virheellinen tai vanhentunut linkki." });
+    }
+
+    // Hashaa uusi salasana
+    const hashed = await bcrypt.hash(newPassword, 12);
+
+    // Päivitä käyttäjän salasana
+    await query("UPDATE käyttäjät SET salasana_hash = ? WHERE id = ?", [
+      hashed,
+      row.user_id,
+    ]);
+
+    // Poista token ettei sitä voi käyttää uudelleen
+    await query("DELETE FROM password_resets WHERE token = ?", [token]);
+
+    res.json({ message: "Salasana vaihdettu onnistuneesti." });
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;

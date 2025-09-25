@@ -142,7 +142,7 @@ router.post("/passwordReset", async (req, res, next) => {
       [user.id, token, expires]
     );
 
-    const resetLink = `https://yourfrontendurl/reset?token=${token}`;
+    const resetLink = `http://localhost:5173/resetoiSalasana?token=${token}`;
 
     // Lähetä sähköposti
     await sendEmail(

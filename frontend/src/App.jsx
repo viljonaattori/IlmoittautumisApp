@@ -11,6 +11,8 @@ import CookieBanner from "./components/CookieBanner";
 import PaivitaTapahtuma from "./pages/paivitaTapahtuma";
 import MuokkaaJoukkuetta from "./pages/MuokkaaJoukkuetta";
 import Asetukset from "./pages/Asetukset";
+import UnohtuikoSalasana from "./pages/UnohtuikoSalasana";
+import ResetoiSalasana from "./pages/ResetoiSalasana";
 
 function App() {
   const darkTheme = createTheme({
@@ -29,17 +31,22 @@ function App() {
       <CssBaseline />
       <Router>
         <Routes>
+          {/* Julkiset reitit */}
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/join/:token" element={<Join />} />
           <Route
             path="/paivitaTapahtuma/:tapahtumaId"
             element={<PaivitaTapahtuma />}
           />
-          <Route path="/join/:token" element={<Join />} />
+          <Route path="/unohtuikoSalasana" element={<UnohtuikoSalasana />} />
+          <Route path="/resetoiSalasana" element={<ResetoiSalasana />} />
+
+          {/* Suojatut reitit */}
           <Route
             element={
               <ProtectedRoute>
-                <Layout /> {/* kaikki sisällöt Layoutin sisälle */}
+                <Layout />
               </ProtectedRoute>
             }
           >

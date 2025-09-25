@@ -84,23 +84,34 @@ function Login() {
             variant="contained"
             color="primary"
             fullWidth
-            sx={{ mb: 5 }}
+            sx={{ mb: 1 }}
           >
             Kirjaudu
           </Button>
+
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Button
+              variant="text"
+              onClick={() => navigate("/unohtuikoSalasana")}
+            >
+              Unohditko salasanan?
+            </Button>
+          </Box>
         </form>
 
-        <Typography variant="h6">Uusi käyttäjä?</Typography>
+        <Box sx={{ mt: 4, textAlign: "center" }}>
+          <Typography variant="h6">Uusi käyttäjä?</Typography>
 
-        <Button
-          variant="outlined"
-          color="secondary"
-          fullWidth
-          sx={{ mt: 2 }}
-          onClick={() => navigate("/register")}
-        >
-          Rekisteröidy
-        </Button>
+          <Button
+            variant="outlined"
+            color="secondary"
+            fullWidth
+            sx={{ mt: 2 }}
+            onClick={() => navigate("/register")}
+          >
+            Rekisteröidy
+          </Button>
+        </Box>
       </Box>
     </Container>
   );

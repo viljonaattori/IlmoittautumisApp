@@ -57,7 +57,7 @@ Päivä: 23.9 Aika: 1h    Mitä tein: Lisäsin joukkueelle kuvauksen rekisteröi
 Päivä:      Aika: 2h    Mitä tein: Muokkaa joukkuetta sivu ja endpointit kuvauksen, sekä joukkueen nimen päivitykseen.
 Päivä:      Aika: 4h    Mitä tein: Tein asetukset sivun, jossa käyttäjä voi muokata tietojaan tai vaihtaa salasanaa.
 
-90h
+
 
 Päivä: 24.9 Aika:       Mitä tein: Poistin .github/workflows, en saanut toimimaan halutulla tavalla.
 Päivä:      Aika: 1h    Mitä tein: Muokkasin manuaalisen päivityksen pois osallistaja määristä ja se päivittyy nyt klikkauksesta.
@@ -68,3 +68,6 @@ Päivä: 25.9 Aika: 1h    Mitä tein: Siirsin joukkueen poiston muokkaus sivulle
 Päivä:      Aika: 4h    Mitä tein: Opiskelin salasanan palautusta gmailin kautta.
             Aika: 3h    Mitä tein: endpointit tehty salasanavaihdolle ja linkille, sekä testattu REST serverillä.
             Aika: 2h    Mitä tein: Fronttiin tarvittavat toimenpiteet salasanan vaihdolle, testaus, että toimii.
+108h
+
+Päivä: 26.9 Aika: 6h    Mitä tein: Tapahtumat sivun jossa listattuna kaikki tapahtumat, sekä suodutus tyypin mukaan.

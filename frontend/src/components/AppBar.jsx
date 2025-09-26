@@ -26,6 +26,7 @@ const drawerWidth = 240;
 
 const navItems = [
   { label: "Etusivu", path: "/etusivu" },
+  { label: "Tapahtumat", path: "/tapahtumat" },
   { label: "Muokkaa joukkuetta", path: "/muokkaaJoukkuetta", adminOnly: true },
   { label: "Asetukset", path: "/asetukset" },
 ];

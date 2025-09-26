@@ -13,6 +13,7 @@ import MuokkaaJoukkuetta from "./pages/MuokkaaJoukkuetta";
 import Asetukset from "./pages/Asetukset";
 import UnohtuikoSalasana from "./pages/UnohtuikoSalasana";
 import ResetoiSalasana from "./pages/ResetoiSalasana";
+import Tapahtumat from "./pages/Tapahtumat";
 
 function App() {
   const darkTheme = createTheme({
@@ -53,6 +54,7 @@ function App() {
             <Route path="/etusivu" element={<Etusivu />} />
             <Route path="/muokkaaJoukkuetta" element={<MuokkaaJoukkuetta />} />
             <Route path="/asetukset" element={<Asetukset />} />
+            <Route path="/tapahtumat" element={<Tapahtumat />} />
           </Route>
         </Routes>
       </Router>

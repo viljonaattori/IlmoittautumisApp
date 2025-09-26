@@ -40,6 +40,27 @@ router.get("/menneet", authRequired, async (req, res, next) => {
   }
 });
 
+// Hakee menneet JA tulevat
+router.get("/all", authRequired, async (req, res, next) => {
+  try {
+    const rows = await query(
+      `SELECT 
+         t.id, t.joukkue_id, t.tyyppi, t.paikka, t.aika, t.kuvaus,
+         SUM(o.status = 'osallistun') AS osallistujat,
+         SUM(o.status = 'en_osallistu') AS ei_osallistujat
+       FROM tapahtumat t
+       LEFT JOIN osallistumiset o ON o.tapahtuma_id = t.id
+       WHERE t.joukkue_id = ?
+       GROUP BY t.id
+       ORDER BY t.aika DESC`,
+      [req.user.joukkue_id]
+    );
+
+    res.json(rows);
+  } catch (err) {
+    next(err);
+  }
+});
 // Osallistuminen tapahtumaan id perusteella
 router.post("/:id/osallistuminen", authRequired, async (req, res, next) => {
   try {

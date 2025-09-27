@@ -35,6 +35,14 @@ app.use("/api/users", userRoutes);
 
 app.get("/", (_req, res) => res.send("API ok"));
 
+// --- Frontendin build (dist) ---
+app.use(express.static(path.join(__dirname, "dist")));
+
+// Jos mikään yllä olevista ei matchaa, palautetaan index.html
+// Tämä mahdollistaa React Router / Vite BrowserRouter -reitityksen Renderissä.
+app.get(/.*/, (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
 app.use(unknownEndpoint);
 app.use(errorHandler);
 

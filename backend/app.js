@@ -33,7 +33,7 @@ app.use("/api/tapahtumat", tapahtumatRouter);
 app.use("/api/invite", inviteRoutes);
 app.use("/api/users", userRoutes);
 
-//app.get("/", (_req, res) => res.send("API ok"));
+//app.get("/", (_req, res) => res.send("API ok")); tämä kaappasi yhteyden ennen tuota distiä.
 
 // --- Frontendin build (dist) ---
 app.use(express.static(path.join(__dirname, "dist")));

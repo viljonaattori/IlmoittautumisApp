@@ -77,4 +77,4 @@ Päivä: 26.9 Aika: 6h    Mitä tein: Tapahtumat sivun jossa listattuna kaikki t
 
 Päivä: 27.9 Aika: 1h     Mitä tein: Lisäsin filtteröinnin menneille ja tuleville tapahtumille.
 Päivä:      Aika: 2h     Mitä tein: Opiskelin mariaDB hostingia, kun ei lähtenyt backend renderissä vastaamaan, yhteyksiö oli luotu liian paljon.  
-Päivä:      Aika: 1h     Mitä tein: Hävitty taistelu frontedin renderiin saamiseksi.
+Päivä:      Aika: 2h     Mitä tein: Hävitty taistelu frontedin renderiin saamiseksi. Korjaus* Taistelu voitettu

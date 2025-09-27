@@ -21,10 +21,13 @@ export default function MembersPanel({
 
       const teamId = members[0].joukkue_id; // käytetään joukkueen id:tä
 
-      const res = await fetch(`http://localhost:3001/api/invite/${teamId}`, {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await fetch(
+        `https://ilmoittautumisapp.onrender.com/api/invite/${teamId}`,
+        {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Virhe linkin luonnissa");

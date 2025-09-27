@@ -7,11 +7,14 @@ export default function UnohtuikoSalasana() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:3001/api/auth/passwordReset", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-    });
+    const res = await fetch(
+      "https://ilmoittautumisapp.onrender.com/api/auth/passwordReset",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      }
+    );
 
     const data = await res.json();
     setMessage(data.message);

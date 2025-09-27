@@ -31,7 +31,7 @@ export default function MuokkaaJoukkuetta() {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `http://localhost:3001/api/joukkueet/${user.joukkue_id}`,
+          `https://ilmoittautumisapp.onrender.com/api/joukkueet/${user.joukkue_id}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         if (!res.ok) throw new Error("Haku epäonnistui");
@@ -53,7 +53,7 @@ export default function MuokkaaJoukkuetta() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await fetch(
-      `http://localhost:3001/api/joukkueet/${user.joukkue_id}`,
+      `https://ilmoittautumisapp.onrender.com/api/joukkueet/${user.joukkue_id}`,
       {
         method: "PUT",
         headers: {

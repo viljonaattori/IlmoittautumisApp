@@ -34,13 +34,13 @@ export default function Etusivu() {
 
     const fetchLogo = async () => {
       const res = await fetch(
-        `http://localhost:3001/api/joukkueet/${user.joukkue_id}/kuva`,
+        `https://ilmoittautumisapp.onrender.com/api/joukkueet/${user.joukkue_id}/kuva`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       if (res.ok) {
         const data = await res.json();
         if (data.kuva) {
-          setTeamLogo(`http://localhost:3001${data.kuva}`);
+          setTeamLogo(`https://ilmoittautumisapp.onrender.com${data.kuva}`);
         } else {
           setTeamLogo(""); // ei kuvaa
         }

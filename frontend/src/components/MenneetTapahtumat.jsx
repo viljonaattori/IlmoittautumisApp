@@ -20,7 +20,7 @@ function MenneetTapahtumat() {
         setError(null);
         const token = localStorage.getItem("token");
         const res = await fetch(
-          "http://localhost:3001/api/tapahtumat/menneet",
+          "https://ilmoittautumisapp.onrender.com/api/tapahtumat/menneet",
           {
             headers: { Authorization: `Bearer ${token}` },
           }

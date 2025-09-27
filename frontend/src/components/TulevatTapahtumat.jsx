@@ -51,7 +51,7 @@ export default function TulevatTapahtumat({
 
     try {
       const res = await fetch(
-        `http://localhost:3001/api/tapahtumat/${id}/osallistuminen`,
+        `https://ilmoittautumisapp.onrender.com/api/tapahtumat/${id}/osallistuminen`,
         {
           method: "POST",
           headers: {

@@ -14,9 +14,12 @@ export default function Tapahtumat() {
     const fetchAll = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await fetch("http://localhost:3001/api/tapahtumat/all", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await fetch(
+          "https://ilmoittautumisapp.onrender.com/api/tapahtumat/all",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         if (!res.ok) throw new Error("Virhe tapahtumien haussa");
         const data = await res.json();
         setEvents(data);

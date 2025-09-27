@@ -27,7 +27,7 @@ export default function Join() {
     const fetchInvite = async () => {
       try {
         const res = await fetch(
-          `http://localhost:3001/api/invite/bytoken/${token}`
+          `https://ilmoittautumisapp.onrender.com/api/invite/bytoken/${token}`
         );
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Virhe kutsun haussa");

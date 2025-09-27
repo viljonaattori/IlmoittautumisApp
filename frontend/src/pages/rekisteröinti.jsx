@@ -32,7 +32,7 @@ export default function Register() {
 
   // Haetaan joukkueet backista kun komponentti lataa
   useEffect(() => {
-    fetch("http://localhost:3001/api/joukkueet")
+    fetch("https://ilmoittautumisapp.onrender.com/api/joukkueet")
       .then((res) => res.json())
       .then((data) => setJoukkueet(data))
       .catch((err) => console.error("joukkueet fetch error", err));

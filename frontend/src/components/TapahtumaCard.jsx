@@ -60,10 +60,13 @@ export default function TapahtumaCard({
     try {
       setDeleting(true);
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:3001/api/tapahtumat/${e.id}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await fetch(
+        `https://ilmoittautumisapp.onrender.com/api/tapahtumat/${e.id}`,
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Poisto epäonnistui");
       onDeleted?.(e.id); // ilmoita parentille

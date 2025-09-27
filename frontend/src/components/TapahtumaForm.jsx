@@ -68,19 +68,22 @@ export default function TapahtumaForm({ onCreated }) {
         dt.getMonth() + 1
       )}-${pad(dt.getDate())} ${pad(dt.getHours())}:${pad(dt.getMinutes())}:00`;
 
-      const res = await fetch("http://localhost:3001/api/tapahtumat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          tyyppi,
-          paikka,
-          aika: mysqlDateTime,
-          kuvaus: kuvaus || null,
-        }),
-      });
+      const res = await fetch(
+        "https://ilmoittautumisapp.onrender.com/api/tapahtumat",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            tyyppi,
+            paikka,
+            aika: mysqlDateTime,
+            kuvaus: kuvaus || null,
+          }),
+        }
+      );
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Tallennus epäonnistui");

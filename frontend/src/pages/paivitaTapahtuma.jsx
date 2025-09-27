@@ -23,9 +23,12 @@ export default function PaivitaTapahtuma() {
 
   // Haetaan olemassa olevat tiedot
   useEffect(() => {
-    fetch(`http://localhost:3001/api/tapahtumat/${tapahtumaId}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
+    fetch(
+      `https://ilmoittautumisapp.onrender.com/api/tapahtumat/${tapahtumaId}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    )
       .then((r) => {
         if (!r.ok) throw new Error("Virhe haettaessa tapahtumaa");
         return r.json();
@@ -54,7 +57,7 @@ export default function PaivitaTapahtuma() {
     };
 
     const res = await fetch(
-      `http://localhost:3001/api/tapahtumat/${tapahtumaId}`,
+      `https://ilmoittautumisapp.onrender.com/api/tapahtumat/${tapahtumaId}`,
       {
         method: "PUT",
         headers: {

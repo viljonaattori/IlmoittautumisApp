@@ -44,7 +44,7 @@ function DrawerAppBar({ window, joukkueNimi, onLogout }) {
 
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://localhost:3001/api/joukkueet/members", {
+      fetch("https://ilmoittautumisapp.onrender.com/api/joukkueet/members", {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then((res) => res.json())

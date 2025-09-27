@@ -14,12 +14,15 @@ function DeleteTeam({ teamId, token, onDeleted }) {
 
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:3001/api/joukkueet/${teamId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await fetch(
+        `https://ilmoittautumisapp.onrender.com/api/joukkueet/${teamId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (!res.ok) {
         const data = await res.json();

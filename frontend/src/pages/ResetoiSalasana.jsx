@@ -11,11 +11,14 @@ export default function ResetoiSalasana() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:3001/api/auth/changePassword", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token, newPassword }),
-    });
+    const res = await fetch(
+      "https://ilmoittautumisapp.onrender.com/api/auth/changePassword",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token, newPassword }),
+      }
+    );
 
     const data = await res.json();
     if (res.ok) {

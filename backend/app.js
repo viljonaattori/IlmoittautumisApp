@@ -35,6 +35,14 @@ app.use("/api/users", userRoutes);
 
 app.get("/", (_req, res) => res.send("API ok"));
 
+// Palvellaan frontendin build
+app.use(express.static(path.join(__dirname, "dist")));
+
+// Jos mikään reitti ei matchaa, palautetaan index.html
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
+
 app.use(unknownEndpoint);
 app.use(errorHandler);
 

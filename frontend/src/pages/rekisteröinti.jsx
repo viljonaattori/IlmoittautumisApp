@@ -59,11 +59,14 @@ export default function Register() {
         new_team_kuvaus: mode === "create" ? newTeamDescription : null,
       };
 
-      const res = await fetch("http://localhost:3001/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
+      const res = await fetch(
+        "https://ilmoittautumisapp.onrender.com/api/auth/register",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        }
+      );
 
       const data = await res.json();
 

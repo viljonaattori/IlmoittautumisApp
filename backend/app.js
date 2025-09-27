@@ -39,7 +39,7 @@ app.get("/", (_req, res) => res.send("API ok"));
 app.use(express.static(path.join(__dirname, "dist")));
 
 // Jos mikään reitti ei matchaa, palautetaan index.html
-app.get("*", (req, res) => {
+app.get("/*", function (req, res) {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 

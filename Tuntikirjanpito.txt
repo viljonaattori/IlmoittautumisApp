@@ -74,3 +74,5 @@ Päivä:      Aika: 4h    Mitä tein: Opiskelin salasanan palautusta gmailin kau
 Päivä: 26.9 Aika: 6h    Mitä tein: Tapahtumat sivun jossa listattuna kaikki tapahtumat, sekä suodutus tyypin mukaan.
 
 111h
+
+Päivä 27.9 Aika: 1h     Mitä tein: Lisäsin filtteröinnin menneille ja tuleville tapahtumille.

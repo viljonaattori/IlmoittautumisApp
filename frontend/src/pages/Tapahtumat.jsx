@@ -8,6 +8,7 @@ export default function Tapahtumat() {
   const [loading, setLoading] = useState(true);
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [search, setSearch] = useState("");
+  const [timeFilter, setTimeFilter] = useState("");
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -44,7 +45,14 @@ export default function Tapahtumat() {
     const matchSearch =
       e.paikka.toLowerCase().includes(search.toLowerCase()) ||
       (e.kuvaus || "").toLowerCase().includes(search.toLowerCase());
-    return matchType && matchSearch;
+    const now = new Date();
+    const matchTime =
+      timeFilter === ""
+        ? true
+        : timeFilter === "tulevat"
+        ? new Date(e.aika) >= now
+        : new Date(e.aika) < now;
+    return matchType && matchSearch && matchTime;
   });
 
   const types = [...new Set(events.map((e) => e.tyyppi))];
@@ -61,6 +69,8 @@ export default function Tapahtumat() {
         setSelectedTypes={setSelectedTypes}
         search={search}
         setSearch={setSearch}
+        timeFilter={timeFilter}
+        setTimeFilter={setTimeFilter}
       />
 
       <TapahtumaList events={filteredEvents} />

@@ -6,6 +6,8 @@ export default function TapahtumaFilter({
   setSelectedTypes,
   search,
   setSearch,
+  timeFilter,
+  setTimeFilter,
 }) {
   const toggleType = (type) => {
     setSelectedTypes((prev) =>
@@ -24,6 +26,7 @@ export default function TapahtumaFilter({
         onChange={(e) => setSearch(e.target.value)}
       />
 
+      {/* Tyyppisuodattimet */}
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 3 }}>
         {types.map((type) => (
           <FormControlLabel
@@ -37,6 +40,30 @@ export default function TapahtumaFilter({
             label={type}
           />
         ))}
+
+        {/* Aikasuodattimet */}
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={timeFilter === "tulevat"}
+              onChange={() =>
+                setTimeFilter(timeFilter === "tulevat" ? "" : "tulevat")
+              }
+            />
+          }
+          label="Tulevat"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={timeFilter === "menneet"}
+              onChange={() =>
+                setTimeFilter(timeFilter === "menneet" ? "" : "menneet")
+              }
+            />
+          }
+          label="Menneet"
+        />
       </Box>
     </>
   );

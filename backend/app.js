@@ -35,12 +35,6 @@ app.use("/api/users", userRoutes);
 
 app.get("/", (_req, res) => res.send("API ok"));
 
-app.use(express.static(path.join(__dirname, "dist")));
-
-// Kaikki muut pyynnöt ohjataan index.html:ään
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
-});
 app.use(unknownEndpoint);
 app.use(errorHandler);
 

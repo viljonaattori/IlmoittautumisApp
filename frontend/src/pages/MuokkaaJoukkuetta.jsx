@@ -18,7 +18,7 @@ export default function MuokkaaJoukkuetta() {
 
   useEffect(() => {
     fetchMembers();
-  }, [fetchMembers]);
+  }, []);
 
   useEffect(() => {
     if (user && members.some((m) => m.id === user.id && m.is_admin)) {

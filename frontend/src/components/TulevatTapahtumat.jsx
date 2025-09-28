@@ -24,9 +24,12 @@ export default function TulevatTapahtumat({
       setLoading(true);
       setError(null);
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:3001/api/tapahtumat", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await fetch(
+        "https://ilmoittautumisapp.onrender.com/api/tapahtumat",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Virhe haettaessa tapahtumia");
       setEvents(data);

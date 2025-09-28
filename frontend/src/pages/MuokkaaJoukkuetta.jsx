@@ -13,12 +13,8 @@ export default function MuokkaaJoukkuetta() {
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
-  // Haetaan joukkueen jäsenet ja tarkistetaan admin-oikeus
-  const { members, fetchMembers } = useMembers();
-
-  useEffect(() => {
-    fetchMembers();
-  }, []);
+  // Haetaan joukkueen jäsenet ja tarkistetaan admin oikeus
+  const { members } = useMembers();
 
   useEffect(() => {
     if (user && members.some((m) => m.id === user.id && m.is_admin)) {
@@ -49,7 +45,6 @@ export default function MuokkaaJoukkuetta() {
   const handleChange = (e) =>
     setData({ ...data, [e.target.name]: e.target.value });
 
-  // Tietojen päivitys
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await fetch(

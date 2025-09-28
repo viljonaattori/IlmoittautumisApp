@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 export default function useMembers() {
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchMembers = async () => {
+  // Memoisoitu haku  funktio ei muutu joka renderillä
+  const fetchMembers = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -24,7 +25,7 @@ export default function useMembers() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   const deleteMember = async (id) => {
     if (!window.confirm("Poistetaanko tämä jäsen?")) return;
@@ -49,7 +50,7 @@ export default function useMembers() {
 
   useEffect(() => {
     fetchMembers();
-  }, []);
+  }, [fetchMembers]);
 
   return { members, loading, error, fetchMembers, deleteMember };
 }

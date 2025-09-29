@@ -42,25 +42,29 @@ const userExtractor = (req, _res, next) => {
 // voidaan käytttää toiminnoissa missä käyttäjän on oltava ylläpitäjä esim, tapahtumien poisto
 const requireTeamAdmin = async (req, res, next) => {
   try {
-    if (!req.user?.joukkue_id || !req.user?.id) {
+    if (!req.user?.id) {
       return res.status(401).json({ error: "Unauthorized" });
     }
 
-    // Haetaan joukkueen ylläpitäjä
+    // käytetään reitillä annettua id:tä
+    const joukkueId = Number(req.params.id || req.user.joukkue_id);
+
     const rows = await query(
       "SELECT `ylläpitäjä_id` FROM `joukkueet` WHERE id = ?",
-      [req.user.joukkue_id]
+      [joukkueId]
     );
 
     if (rows.length === 0) {
       return res.status(404).json({ error: "Joukkuetta ei löydy" });
     }
 
-    const adminId = Number(rows[0]["ylläpitäjä_id"]);
+    const adminId = Number(rows[0].ylläpitäjä_id);
     if (Number(req.user.id) !== adminId) {
-      return res.status(403).json({
-        error: "Vain joukkueen ylläpitäjä voi suorittaa tämän toimen.",
-      });
+      return res
+        .status(403)
+        .json({
+          error: "Vain joukkueen ylläpitäjä voi suorittaa tämän toimen.",
+        });
     }
 
     next();

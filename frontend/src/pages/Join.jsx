@@ -59,19 +59,25 @@ export default function Join() {
         joukkue_id: joukkue.id,
       };
 
-      const res = await fetch("http://localhost:3001/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
+      const res = await fetch(
+        "https://ilmoittautumisapp.onrender.com/api/auth/register",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        }
+      );
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Rekisteröinti epäonnistui");
 
       // Merkitään kutsu käytetyksi
-      await fetch(`http://localhost:3001/api/invite/use/${token}`, {
-        method: "POST",
-      });
+      await fetch(
+        `https://ilmoittautumisapp.onrender.com/api/invite/use/${token}`,
+        {
+          method: "POST",
+        }
+      );
 
       setSuccess("Liittyminen onnistui!");
       localStorage.setItem("token", data.token);

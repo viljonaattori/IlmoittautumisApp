@@ -6,9 +6,12 @@ import PasswordForm from "../components/settings/PasswordForm";
 import DeleteAccountSection from "../components/settings/DeleteAccount";
 import TeamImage from "../components/settings/TeamImage";
 
-export default function Asetukset() {
+export default function Asetukset({ user, members }) {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+
+  // tarkastetaan ylläpitäjä
+  const isAdmin = user && members.some((m) => m.id === user.id && m.is_admin);
 
   return (
     <Box sx={{ p: 3, maxWidth: 600, mx: "auto" }}>
@@ -28,7 +31,7 @@ export default function Asetukset() {
       <DeleteAccountSection token={token} />
       <Divider sx={{ my: 2 }} />
 
-      <TeamImage token={token} />
+      {isAdmin && <TeamImage token={token} />}
 
       <Button variant="outlined" onClick={() => navigate("/etusivu")}>
         Takaisin etusivulle

@@ -44,7 +44,7 @@ export default function Register() {
 
     // ääkkösten validointi
     if (!emailValidator(email)) {
-      setError("Sähköpostiosoite ei saa sisältää ääkkösiä");
+      setError("Sähköpostin muoto ei kelpaa");
       return;
     }
 

@@ -108,16 +108,6 @@ export default function Etusivu() {
           <Box sx={{ mt: 3, maxHeight: 280, overflowY: "auto" }}>
             <MenneetTapahtumat />
           </Box>
-
-          {isAdmin && (
-            <Box sx={{ paddingTop: 5 }}>
-              <DeleteTeam
-                teamId={user?.joukkue_id}
-                token={localStorage.getItem("token")}
-                onDeleted={() => navigate("/")}
-              />
-            </Box>
-          )}
         </Grid>
       </Grid>
     </Box>

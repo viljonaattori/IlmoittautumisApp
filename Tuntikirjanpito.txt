@@ -80,3 +80,4 @@ Päivä:      Aika: 2h     Mitä tein: Opiskelin mariaDB hostingia, kun ei läht
 Päivä:      Aika: 2h     Mitä tein: Hävitty taistelu frontedin renderiin saamiseksi. Korjaus* Taistelu voitettu
 
 Päivä: 29.9 Aika: 4h     Mitä tein: Sain kaiken vihdoin renderiin, mutta consoli hehkui punaisena niin meni sitä selvitellessä meni aikaa. Syy oli, että filess.io mikä hostaa mun tietokantaa nii siellä ei ollut tuorein versio.
+Päivä:      Aika: 2h     Mitä tein: Vielä viimeisiä korjauksia ja dokumentointia.

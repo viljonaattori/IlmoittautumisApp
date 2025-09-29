@@ -9,22 +9,27 @@ export default function TeamImage({ token }) {
   // Hae joukkueen id ja nykyinen kuva
   useEffect(() => {
     const fetchTeamData = async () => {
-      const res = await fetch("http://localhost:3001/api/joukkueet/members", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await fetch(
+        "https://ilmoittautumisapp.onrender.com/api/joukkueet/members",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       if (res.ok) {
         const data = await res.json();
         setJoukkueId(data.joukkue_id);
 
         // Haetaan nykyinen kuva
         const teamRes = await fetch(
-          `http://localhost:3001/api/joukkueet/${data.joukkue_id}/kuva`,
+          `https://ilmoittautumisapp.onrender.com/api/joukkueet/${data.joukkue_id}/kuva`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         if (teamRes.ok) {
           const teamData = await teamRes.json();
           if (teamData.kuva) {
-            setPreviewUrl(`http://localhost:3001${teamData.kuva}`);
+            setPreviewUrl(
+              `https://ilmoittautumisapp.onrender.com${teamData.kuva}`
+            );
           }
         }
       }
@@ -48,7 +53,7 @@ export default function TeamImage({ token }) {
     formData.append("kuva", selectedImage);
 
     const res = await fetch(
-      `http://localhost:3001/api/joukkueet/${joukkueId}/kuva`,
+      `https://ilmoittautumisapp.onrender.com/api/joukkueet/${joukkueId}/kuva`,
       {
         method: "PUT",
         headers: { Authorization: `Bearer ${token}` },
@@ -58,7 +63,7 @@ export default function TeamImage({ token }) {
 
     if (res.ok) {
       const data = await res.json();
-      setPreviewUrl(`http://localhost:3001${data.path}`);
+      setPreviewUrl(`https://ilmoittautumisapp.onrender.com${data.path}`);
       setSelectedImage(null);
       alert("Joukkueen kuva päivitetty!");
     } else {
@@ -70,7 +75,7 @@ export default function TeamImage({ token }) {
   const handleDelete = async () => {
     if (!joukkueId) return;
     const res = await fetch(
-      `http://localhost:3001/api/joukkueet/${joukkueId}/kuva`,
+      `https://ilmoittautumisapp.onrender.com/api/joukkueet/${joukkueId}/kuva`,
       {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },

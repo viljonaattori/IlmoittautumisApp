@@ -5,14 +5,17 @@ export default function UserNameForm({ token }) {
   const [nimi, setNimi] = useState("");
 
   const handleUpdateName = async () => {
-    const res = await fetch("http://localhost:3001/api/users/me/name", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ nimi }),
-    });
+    const res = await fetch(
+      "https://ilmoittautumisapp.onrender.com/api/users/me/name",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ nimi }),
+      }
+    );
     alert(res.ok ? "Nimi päivitetty!" : "Virhe nimen päivityksessä");
   };
 

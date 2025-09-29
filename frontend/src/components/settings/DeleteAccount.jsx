@@ -15,10 +15,13 @@ export default function DeleteAccountSection({ token }) {
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   const handleDeleteAccount = async () => {
-    const res = await fetch("http://localhost:3001/api/users/me", {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await fetch(
+      "https://ilmoittautumisapp.onrender.com/api/users/me",
+      {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
     if (res.ok) {
       localStorage.clear();
       alert("Käyttäjätili poistettu");

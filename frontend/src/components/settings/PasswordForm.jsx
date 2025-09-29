@@ -6,14 +6,17 @@ export default function PasswordForm({ token }) {
   const [newPassword, setNewPassword] = useState("");
 
   const handleUpdatePassword = async () => {
-    const res = await fetch("http://localhost:3001/api/users/me/password", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ oldPassword, newPassword }),
-    });
+    const res = await fetch(
+      "https://ilmoittautumisapp.onrender.com/api/users/me/password",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ oldPassword, newPassword }),
+      }
+    );
     alert(res.ok ? "Salasana vaihdettu!" : "Virhe salasanan vaihdossa");
   };
 

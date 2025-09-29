@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Box, Typography, Divider, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import UserNameForm from "../components/settings/UserNameForm";
@@ -5,12 +6,22 @@ import EmailForm from "../components/settings/EmailForm";
 import PasswordForm from "../components/settings/PasswordForm";
 import DeleteAccountSection from "../components/settings/DeleteAccount";
 import TeamImage from "../components/settings/TeamImage";
+import useMembers from "../hooks/useMembers";
 
-export default function Asetukset({ user, members }) {
+export default function Asetukset() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
-  // tarkastetaan ylläpitäjä
+  const [user, setUser] = useState(null);
+  const { members } = useMembers();
+
+  // Ladataan käyttäjä localStoragesta kun komponentti renderöityy
+  useEffect(() => {
+    const u = localStorage.getItem("user");
+    if (u) setUser(JSON.parse(u));
+  }, []);
+
+  // Tarkastetaan onko käyttäjä joukkueen ylläpitäjä
   const isAdmin = user && members.some((m) => m.id === user.id && m.is_admin);
 
   return (

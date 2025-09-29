@@ -1,25 +1,25 @@
-# IlmoittautumisApp
+https://ilmoittautumisapp.onrender.com/
 
-Fullstack-kurssi harjoitustyö
+Sovelluksen frontend on toteutettu reactilla ja backend mariaDB:llä, joka hostataan filessio:ssa.
 
-Kun haluan sovelluksen renderiin niin muista vaihtaa frontista api kutsut osoittamaan esim: "https://ilmoittautumisapp.onrender.com/api/joukkueet/members".
-Tietokanta pyörii filess.io sivulla.
+Sovelluksen inspiraationa toimii Nimenhuuto niminen sovellus, joita esim. urheiluseurat käyttävät pelaajien ilmoittautumiseen harjoituksiin tai peleihin.
 
-Tietokantaa muutettu!!! muista viedä uusi versio pilveen.
+Toiminnallisuudet (kaikille):
 
-Kehitysideoita:
+- käyttäjän rekisteröinti
+- Uuden joukkueen luominen
+- Liittymislinkin tekeminen, joka voidaan jakaa ihmiselle kenet halutaan joukkueeseen.
+- tapahtumien lukeminen ja osallistuminen
+- sähköpostin/salasanan muuttaminen
+- nimen vaihto
+- käyttäjätilin poisto
+- unohditko salasanan toiminto, jossa lähetetään uusimislinkki sähköpostiin.
 
-- Joukkueen muokkaus
-  vaihtaa joukkueen nimeä, lisätä/poistaa pelaajia (jos on joukkueen kapteeni).
+Toiminnallisuudet (ylläpitäjälle)
 
-- Ilmoittautumisen hallinta
-  perua osallistuminen, ilmoittaa myöhästymisestä tai erikoisruokavaliosta (jos tapahtuma on esim. turnaus tai juhla).
-
-- Kommentointi / viestiketju tapahtumalle
-  sopia kimppakyydeistä, kysyä lisätietoja.
-
-- Kalenteriin lisääminen
-  nappi, jolla tapahtuma lisätään suoraan Google/Outlook -kalenteriin.
-
-- henkilökohtainen profiili
-  käyttäjä voi päivittää nimeä, yhteystietoja, profiilikuvan.
+- kaikki edellä mainittu
+- tapahtumien luominen/muokkaus/poisto
+- joukkueen poisto (poistaa kaikki käyttäjät kyseisestä joukkueesta)
+- yksittäisen pelaaja poisto
+- joukkueen nimen tai kuvauksen päivittäminen
+- joukkueen logon päivittäminen

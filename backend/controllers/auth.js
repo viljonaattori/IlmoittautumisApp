@@ -142,7 +142,7 @@ router.post("/passwordReset", async (req, res, next) => {
       [user.id, token, expires]
     );
 
-    const resetLink = `http://localhost:5173/resetoiSalasana?token=${token}`;
+    const resetLink = `https://ilmoittautumisapp.onrender.com/resetoiSalasana?token=${token}`;
 
     // Lähetä sähköposti
     await sendEmail(

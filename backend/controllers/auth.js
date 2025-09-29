@@ -3,8 +3,6 @@ const jwt = require("jsonwebtoken");
 const router = require("express").Router();
 const { query } = require("../db/pool");
 const { JWT } = require("../utils/config");
-const { errorHandler } = require("../utils/middleware");
-const emailValidator = require("../utils/emailValidator");
 const { sendEmail } = require("../utils/sendEmail.js");
 const crypto = require("crypto");
 

@@ -23,10 +23,14 @@ Toiminnallisuudet (ylläpitäjälle)
 - joukkueen nimen tai kuvauksen päivittäminen
 - joukkueen logon päivittäminen
 
-Sovelluksessa on myös "unohditko salasanan" toiminto joka pyytää käyttäjää syöttämään sähköpostiosoitteensa, se on ainut asia mikä ei toimi, koska renderin ilmainen ympäristö ei salli uloslähteviä SMTP-yhteyksiä. Käytän nodemaileria sähköpostien lähettämiseen niin se tarvitsit sellaisen. Localissa testattu toimivaksi.
+integraatio testit löytyvät backend/tests
+
+Sovelluksessa on myös "unohditko salasanan" toiminto joka pyytää käyttäjää syöttämään sähköpostiosoitteensa, se on ainut asia mikä ei toimi, koska renderin ilmainen ympäristö ei salli uloslähteviä SMTP-yhteyksiä. Käytän nodemaileria sähköpostien lähettämiseen niin se tarvitsisi sellaisen. Localissa testattu toimivaksi.
 ![alt text](image.png).
 
 Joukkueessa "PoU edustus" on eniten testidataa jos haluaa luoda tunnuksen.
 Jos käyttäjä luo itse uuden joukkueen niin hänestä tulee automaattisesti ylläpitäjä, joten ylläpitäjän toimintoja pääsee testaamaan siten.
 
 [Tuntikirjanpito](tuntikirjanpito.txt)
+
+En oikeastaan katsonut mitään opetusvideoita vaan luin dokumentaatioita esim. https://mui.com/material-ui/getting-started/

@@ -5,7 +5,6 @@ import TulevatTapahtumat from "../components/TulevatTapahtumat";
 import MenneetTapahtumat from "../components/MenneetTapahtumat";
 import TapahtumaForm from "../components/TapahtumaForm";
 import { useNavigate } from "react-router-dom";
-import DeleteTeam from "../components/DeleteTeam";
 import useMembers from "../hooks/useMembers";
 
 export default function Etusivu() {
@@ -42,7 +41,7 @@ export default function Etusivu() {
         if (data.kuva) {
           setTeamLogo(`https://ilmoittautumisapp.onrender.com${data.kuva}`);
         } else {
-          setTeamLogo(""); // ei kuvaa
+          setTeamLogo("");
         }
       }
     };

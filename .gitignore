@@ -1,0 +1,30 @@
+# ======== YLEISET ========
+node_modules/
+.env
+*.log
+dist/
+build/
+.DS_Store
+Thumbs.db
+
+# ======== BACKEND ========
+backend/node_modules/
+backend/.env
+backend/.env.test
+backend/dist/
+backend/uploads/
+backend/tests/
+backend/coverage/
+
+# tietokanta dump
+tietokanta/*.sql
+
+# ======== FRONTEND ========
+frontend/node_modules/
+frontend/.env
+frontend/build/
+frontend/dist/
+
+# ======== MUUT ========
+# VS Code
+.vscode/
